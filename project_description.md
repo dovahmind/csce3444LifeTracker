@@ -1,10 +1,10 @@
-#Description of this Project
+# Description of this Project
 
 
 (Problem statement paragraph will go here)
 
 
-##Potential users
+## Potential users
 
 (Short introductory sentence here):
 
@@ -13,7 +13,7 @@
 	+ (Example sub-bullet point)
 
 
-##Functionality for users
+## Functionality for users
 
 (Short introductory sentence here):
 
@@ -22,7 +22,7 @@
 	+ (Example sub-bullet point)
 
 
-##Potential technology systems and frameworks
+## Potential technology systems and frameworks
 
 (Short introductory sentence here):
 
