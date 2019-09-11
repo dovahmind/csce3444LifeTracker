@@ -4,7 +4,7 @@
 (Problem statement paragraph will go here)
 
 
-## Potential users:
+## Potential Users:
 
 (Short introductory sentence here):
 
@@ -13,7 +13,7 @@
 	+ (Example sub-bullet point)
 
 
-## Functionality for users:
+## Functionality for Users:
 
 (Short introductory sentence here):
 
@@ -22,7 +22,7 @@
 	+ (Example sub-bullet point)
 
 
-## Potential technology systems and frameworks:
+## Potential Technology Systems and Frameworks:
 
 (Short introductory sentence here):
 
