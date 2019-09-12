@@ -1,0 +1,24 @@
+Martin Fritz
+Jacob Roquemore
+Huy Le
+Jonathan Wallis
+Problem Statement for LifeTracker
+The group undertook the project named “LifeTracker” for the reason of creating a system that allows 
+individuals to finetune their daily lifestyle. Normal calendar/tasks applications are often underused 
+or not used at all due to the separation of the two. Not only this, but certain tasks do not occur at 
+the standard frequencies offered by these particular applications. The team aims to create a 
+comprehensive application that allows users to define their absolute needs by providing clear, 
+concise prompts to the user and creates actionable items that the user can track with ease. 
+
+In a traditional calendar, (say the Samsung Calendar application on Samsung phones), if the user 
+wants to create a reminder for an oil change, they would have to create separate instances every 
+service interval. With LifeTracker, the user will be able to create the instance and specify the 
+interval that they want to be reminded. 
+
+Another feature that is toted by this application is the combination of tasks in calendar view. If 
+the task is a time sensitive item, it will mark itself on the calendar and treat it as both a task 
+and appointment. If it just a task, the item will still populate on the calendar as a task that is 
+to be completed at convenience. Repeatable routines, (such as shower, exercise, etc) are repeatable 
+through each of the days specified and allow the user to develop a habit of following their own 
+routine. The goal is to offer a comprehensive view of the day, week and month for the user to toggle 
+through to allow the maximum amount of information required. 
