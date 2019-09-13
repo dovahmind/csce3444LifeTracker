@@ -23,15 +23,15 @@ through to allow the maximum amount of information required.
 
 ## Potential Users:
 
-(Short introductory sentence here):
-
-+ (Example bullet point)
-
-	+ (Example sub-bullet point)
-
+Regular User: 
+	+ Can use Life Tracker such as a daily assistant to remind about incoming tasks.
+	+ Everyone from anyage
+Business User: 
+	+ Can use Life Tracker such as event assistant to create and manage a task:
+	+ For example: Music event, school exam, festival ...
 
 ## Functionality for Users:
-For our life tracker app, we hope to havea comprehensive amount of features that enhances the user's recurring reminders or events in their life. Functions to include are...
+For our life tracker app, we hope to have a comprehensive amount of features that enhances the user's recurring reminders or events in their life. Functions to include are...
 
 + Clean UI
 	+ easy to identify live timers for reminders.
@@ -40,7 +40,7 @@ For our life tracker app, we hope to havea comprehensive amount of features that
 	+ visual 'loading bar' to represent time til next event occurs
 + User Profiles
 	+ Store tasks for cross platform help
-	+ can login on any device/machine and have tasks avaliable
+	+ Can login on any device/machine and have tasks avaliable
 + A list of reminders of recurring tasks/events (ex. like changing air filter or scheduling appointments)
 	+ Provide diverse ammount of sorting systems for tasks that fit the user's needs.
 	+ Different Groupings for the tasks/events
