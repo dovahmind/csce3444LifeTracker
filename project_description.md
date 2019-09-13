@@ -23,10 +23,10 @@ through to allow the maximum amount of information required.
 
 ## Potential Users:
 
-Regular User: 
+Regular User
 	+ Can use Life Tracker such as a daily assistant to remind about incoming tasks.
 	+ Everyone from anyage
-Business User: 
+Business User
 	+ Can use Life Tracker such as event assistant to create and manage a task:
 	+ For example: Music event, school exam, festival ...
 
