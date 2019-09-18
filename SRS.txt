@@ -1,1 +1,14 @@
 
+SRS
+
+Extenrnal Interface
+Jacob
+
+Design Constraints
+Jonathan
+
+Functional Requirements
+Martin
+
+Performance REquirements
+Huy
