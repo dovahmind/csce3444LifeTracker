@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Button viewRecurringTasks;
     private Button viewProfile;
     private Button viewStats;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,8 +93,22 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //here's the menu. I was messing around with it for the most part right now, trying to understand it.
-    //feel free to ignore it.
+    public void openAddDailyTask(){
+        Intent intent = new Intent(this, addDailyTask.class);
+        startActivity(intent);
+    }
+    public void openAddRecurringTask(){
+        Intent intent = new Intent(this, addRecurringTask.class);
+        startActivity(intent);
+    }
+
+    public void openAddEvent() {
+        Intent intent = new Intent(this, addEvent.class);
+        startActivity(intent);
+    }
+
+    //here's the menu. Menu is how you add reminders, currently. select which you'd like to add from the dropdown.
+    //I'm not attached to this design of how adding reminders works. Let me know what y'all think.
     @Override // here I have created the menu at the top of the application
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater(); //inflates menu to show all the options
@@ -104,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) { //when an item is selected, this is called
         switch(item.getItemId()){
-            case R.id.item1://if item one is clicked... opens add reminders
-                openAddReminder();
+            case R.id.addDailyTask:
+                openAddDailyTask();
                 return true;
-            case R.id.item2:
-                openPastReminders();
+            case R.id.addRecurringTask:
+                openAddRecurringTask();
                 return true;
-            case R.id.item3:
-                Toast.makeText(this, "item 3 selected", Toast.LENGTH_SHORT).show();
+            case R.id.addEvent:
+                openAddEvent();
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".viewStats"></activity>
+        <activity android:name=".addEvent"></activity>
+        <activity android:name=".addRecurringTask" />
+        <activity android:name=".addDailyTask" />
+        <activity android:name=".viewStats" />
         <activity android:name=".viewProfile" />
         <activity android:name=".viewRecurringTasks" />
         <activity android:name=".viewDailyTasks" />
