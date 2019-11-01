@@ -15,17 +15,33 @@
     <!--enter in the date.
     for now just a string.-->
     <EditText
-        android:id="@+id/enterEventDate"
+        android:id="@+id/enterStringEventDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_below="@+id/enterEventName"/>
 
+    "
+<!-- Date picker????
+    <DatePicker
+        android:id="@+id/enterEventDate"
+        android:layout_width="wrap_content"
+        android:layout_height="404dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="70dp" />
+-->
     <Button
         android:id="@+id/initEvent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Event"
-        android:layout_centerInParent="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="57dp"
+        android:layout_marginRight="57dp"
+        android:layout_marginBottom="50dp"
+        android:text="Add Event" />
+
 </RelativeLayout>

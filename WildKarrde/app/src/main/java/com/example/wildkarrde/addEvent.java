@@ -27,7 +27,7 @@ public class addEvent extends AppCompatActivity {
         EditText name = (EditText) findViewById(R.id.enterEventName);
         String eventName = name.getText().toString();
 
-        EditText date = (EditText) findViewById(R.id.enterEventDate);
+        EditText date = (EditText) findViewById(R.id.enterStringEventDate);
         String eventDate = date.getText().toString();
 
         //initialize event and put it in backend!!!
