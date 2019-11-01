@@ -25,13 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        addReminderButton = (Button) findViewById(R.id.addReminderButton); //declares buttons
-        addReminderButton.setOnClickListener(new View.OnClickListener() { // sets listener for clicks
-            @Override
-            public void onClick(View v) { //if clicks, call function bellow
-                openAddReminder();
-            }
-        });
+
         //comments above repeat for all of the rest
         viewDailyTasks = (Button) findViewById(R.id.viewDailyTasks);
         viewDailyTasks.setOnClickListener(new View.OnClickListener() {
@@ -67,10 +61,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //opens the activities, called from MainActivity class close above
-    public void openAddReminder(){
-        Intent intent = new Intent(this, addReminder.class);
-        startActivity(intent);
-    }
 
     public void openDailyTasks(){
         Intent intent = new Intent(this, viewDailyTasks.class);
