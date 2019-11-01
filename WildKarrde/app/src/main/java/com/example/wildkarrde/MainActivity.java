@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     public void openDailyTasks(){
         Intent intent = new Intent(this, viewDailyTasks.class);
         startActivity(intent);
+        Toast.makeText(this, "Hey everyone", Toast.LENGTH_SHORT);
     }
 
     public void openRecurringTasks(){
