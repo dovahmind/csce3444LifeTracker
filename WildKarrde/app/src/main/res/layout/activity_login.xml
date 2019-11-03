@@ -11,22 +11,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginEnd="16dp"
+        android:hint="Email or Username"
+        android:inputType="textWebEmailAddress" />
     <!--enter in the date.
     for now just a string.-->
     <EditText
         android:id="@+id/enterPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterUsernameOrEmail"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_below="@+id/enterUsernameOrEmail"/>
+        android:hint="Password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/loginUser"
+        android:layout_width="119dp"
+        android:layout_height="59dp"
+        android:layout_centerInParent="true"
+        android:text="@string/title_activity_login" />
+
+    <TextView
+        android:id="@+id/call_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Login" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="183dp"
+        android:clickable="true"
+        android:text="New user? Sign up here!"
+        android:textIsSelectable="false"
+        android:textSize="18sp" />
 
 </RelativeLayout>

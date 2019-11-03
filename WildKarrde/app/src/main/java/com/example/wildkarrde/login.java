@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class login extends AppCompatActivity {
@@ -23,6 +24,19 @@ public class login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUser();
+            }
+        });
+
+        /* The following activity redirection code is based on code
+            from Gilad Haimov's answer at the following link:
+            https://stackoverflow.com/questions/24610527/how-do-i-get-a-button-to-open-another-activity
+         */
+        TextView register_text = (TextView) findViewById(R.id.call_register);
+        register_text.setOnClickListener(new View.OnClickListener(){
+           @Override
+           public void onClick(View v)
+            {
+                startActivity(new Intent(login.this, registration.class));
             }
         });
     }
