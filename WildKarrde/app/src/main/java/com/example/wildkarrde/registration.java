@@ -77,20 +77,6 @@ public class registration extends AppCompatActivity {
          */
         Context regis = this;
 
-        /* Creating a custom ssl contextobject by making an
-        allowSelfSignedCerts object to call an getsslcontext
-        function whick will retrieve a custom SSLContext object
-        based on a self-signed certificate
-         */
-        allowSelfSignedCerts retrieve = new allowSelfSignedCerts();
-        SSLContext customssl;
-        customssl = retrieve.getsslcontext(regis);
-
-        if(customssl == null)
-        {
-            System.out.println("making a custom ssl context didn't work!");
-        }
-
         /* Displaying the connection result via Toast */
 
         /*
@@ -113,7 +99,7 @@ public class registration extends AppCompatActivity {
             and then calling it's connection attempt function. Also passing a
             context into the function to work with */
             registerHelper registerattempt = new registerHelper();
-            connresult = registerattempt.connectionattempt(customssl,attr);
+            connresult = registerattempt.connectionattempt(regis,attr);
 
             /* If a success message was returned, then display it and
             return to the login screen

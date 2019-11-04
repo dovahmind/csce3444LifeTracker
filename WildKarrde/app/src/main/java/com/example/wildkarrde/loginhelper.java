@@ -3,29 +3,34 @@ package com.example.wildkarrde;
 import android.content.Context;
 import android.os.StrictMode;
 
-import javax.net.ssl.*;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.lang.String;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
-public class registerHelper {
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+
+public class loginhelper {
+
     public String connectionattempt(Context inpcontext, String inpattr[]) throws IOException, CertificateException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         /* FOR DEVELOPMENT BUILDS ONLY! IF TIME USE AsyncTask INSTEAD! */
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         System.out.println("At beginning of connection attempt\n");
 
+
+        //Check to see if the username is actually an email
+        //Source: PointerNull answer at: https://stackoverflow.com/questions/6119722/how-to-check-edittexts-text-is-email-address-or-not
+        boolean isemail = android.util.Patterns.EMAIL_ADDRESS.matcher(inpattr[0]).matches();
 
         /* Creating a custom ssl contextobject by making an
         allowSelfSignedCerts object to call an getsslcontext
@@ -43,7 +48,7 @@ public class registerHelper {
 
         String result;
         /* Forming the url to the registration php script */
-        URL url = new URL("https://138.68.23.145/registration.php");
+        URL url = new URL("https://138.68.23.145/login.php");
 
 
         /* FOR DEVELOPMENT PURPOSES ONLY!
@@ -95,7 +100,19 @@ public class registerHelper {
         OutputStreamWriter bodyformer = new OutputStreamWriter(sender, "UTF-8");
 
         /* Writing the POST Request body */
-        String bodyparam = "email=" + inpattr[0] + "&user_name=" + inpattr[1] + "&password=" + inpattr[2];
+
+        String bodyparam = null;
+        /* If an email was entered in the first input box, then make POST request with email attribute */
+        if(isemail)
+        {
+            bodyparam = "email=" + inpattr[0] + "&password=" + inpattr[1];
+        }
+
+        else
+        {
+            bodyparam = "user_name=" + inpattr[0] + "&password=" + inpattr[1];
+        }
+
 
         /* Writing using output stream writer */
         bodyformer.write(bodyparam);
@@ -105,6 +122,16 @@ public class registerHelper {
 
         /* Closing the output stream itself */
         sender.close();
+
+        /* Checking the http response */
+        int httpstatus = urlConnection.getResponseCode();
+
+        /* If the http response was not ok, then return an error string back to login activity */
+        if(httpstatus != HttpURLConnection.HTTP_OK)
+        {
+            result = "HTTP response error!";
+            return result;
+        }
 
         /*Gathering response from POST request */
         InputStream response = null;
@@ -122,9 +149,40 @@ public class registerHelper {
         java.util.Scanner s = new java.util.Scanner(response).useDelimiter("\\A");
         result = s.hasNext() ? s.next() : "";
 
-        /* Closing the input stream */
-        response.close();
+        String cookie_data = null;
 
-        return result;
+        boolean login_success;
+        String successstr = "success";
+        login_success = result.toLowerCase().contains(successstr.toLowerCase());
+
+
+        /* If success was found in the returned message, then get the header data from Set-Cookie */
+        if(login_success){
+            /* Gathering the header data from the Set-Cookie header and
+            saving it as raw data into a string
+             */
+            cookie_data = urlConnection.getHeaderField("Set-Cookie");
+
+            /* Saving the raw cookie data in shared preferences for storage and retrieval from other
+            connection functions
+             */
+            cookie_storage cookie_storer = new cookie_storage();
+
+            cookie_storer.store_cookie(cookie_data, inpcontext);
+
+            System.out.println("Cookie data stored is" + cookie_data + "\n");
+
+            /* Once cookie is stored, then close the input stream and return the result*/
+            response.close();
+
+            return result;
+        }
+
+        /* Otherwise, just return whatever result string we have */
+        else
+        {
+            response.close();
+            return result;
+        }
     }
 }
