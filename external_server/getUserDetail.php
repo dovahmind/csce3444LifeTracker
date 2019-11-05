@@ -18,9 +18,9 @@ if(isset($_GET['UID'])){
 			//Populate the movie array
 			$userArray["UID"] = $UID;
 			$userArray["email"] = $email;
-      $userArray["username"] = $username;
-      $userArray["fullname"] = $fullname;
-      $response["success"] = 1;
+     			$userArray["username"] = $username;
+      			$userArray["fullname"] = $fullname;
+      			$response["success"] = 1;
 			$response["data"] = $userArray;
 		
 		
