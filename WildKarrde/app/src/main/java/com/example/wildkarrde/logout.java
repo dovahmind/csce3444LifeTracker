@@ -41,6 +41,7 @@ public class logout{
         if(customssl == null)
         {
             System.out.println("making a custom ssl context didn't work!");
+            return false;
         }
 
         String result;
@@ -67,11 +68,9 @@ public class logout{
 
         System.out.println("Opened connection ok\n");
 
-        /* Gathering the SSLContext object information from the passed parameter */
-        SSLContext finalsslobj;
-        finalsslobj = customssl;
-
-        SSLSocketFactory sf = finalsslobj.getSocketFactory();
+        /* Gathering the SSLContext object information from the passed parameter and
+        setting the SSLSocketFactory for the urlConnection*/
+        SSLSocketFactory sf = customssl.getSocketFactory();
         urlConnection.setSSLSocketFactory(sf);
 
         System.out.println("Set socket factory ok\n");

@@ -132,7 +132,8 @@ public class login extends AppCompatActivity {
 
         // ISSUE DISPLAYING ERROR MESSAGE HERE! maybe due to getapplicationcontect() from logincontext?
         else {
-            Toast.makeText(logincontext, "Invalid login. Try a different Username or Password.", Toast.LENGTH_SHORT);
+            Toast loginerror = Toast.makeText(logincontext, "Invalid login. Try a different Username or Password.", Toast.LENGTH_SHORT);
+            loginerror.show();
             //Toast.makeText(regis, result, Toast.LENGTH_LONG);
         }
     }

@@ -149,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
             cookie_deleter.delete_cookie(appcontext);
 
             /* Then display a toast message indiciating logout */
-            Toast.makeText(this, "Logging out!", Toast.LENGTH_SHORT);
+            Toast loggingout = Toast.makeText(this, "Logging out!", Toast.LENGTH_SHORT);
+            loggingout.show();
 
             /* Then start the login activity from the main menu */
             Intent intent = new Intent(this, login.class);
@@ -158,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
         /* Otherwise, just display an error message */
         else{
-            Toast.makeText(this, "Couldn't logout", Toast.LENGTH_SHORT);
+            Toast logouterror = Toast.makeText(this, "Couldn't logout", Toast.LENGTH_SHORT);
+            logouterror.show();
         }
     }
 

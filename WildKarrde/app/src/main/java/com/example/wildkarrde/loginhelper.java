@@ -44,6 +44,7 @@ public class loginhelper {
         if(customssl == null)
         {
             System.out.println("making a custom ssl context didn't work!");
+            return("SSL error!");
         }
 
         String result;
@@ -70,11 +71,10 @@ public class loginhelper {
 
         System.out.println("Opened connection ok\n");
 
-        /* Gathering the SSLContext object information from the passed parameter */
-        SSLContext finalsslobj;
-        finalsslobj = customssl;
+        /* Gathering the SSLContext object information from the passed parameter and
+        setting the SSLSocketFactory for the urlConnection */
 
-        SSLSocketFactory sf = finalsslobj.getSocketFactory();
+        SSLSocketFactory sf = customssl.getSocketFactory();
         urlConnection.setSSLSocketFactory(sf);
 
         System.out.println("Set socket factory ok\n");
