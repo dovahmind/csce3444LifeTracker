@@ -9,5 +9,5 @@ session_start();
 /* Destroying the session on both the user side and server side */
 session_destroy();
 
-echo 'User is now logged out!'
+echo 'Logout success'
 ?>

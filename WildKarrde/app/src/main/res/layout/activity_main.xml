@@ -15,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="103dp"
         android:layout_marginRight="103dp"
-        android:layout_marginBottom="538dp"
+        android:layout_marginBottom="452dp"
         android:text="View Profile"
         tools:layout_centerHorizontal="true"
         tools:layout_centerVertical="true" />
@@ -29,9 +29,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="23dp"
-        android:layout_marginEnd="250dp"
-        android:layout_marginRight="250dp"
-        android:layout_marginBottom="537dp"
+        android:layout_marginEnd="249dp"
+        android:layout_marginRight="249dp"
+        android:layout_marginBottom="453dp"
         android:text="View Statistics"
         tools:layout_centerHorizontal="true"
         tools:layout_centerVertical="true" />
@@ -44,10 +44,10 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="182dp"
-        android:layout_marginEnd="90dp"
-        android:layout_marginRight="90dp"
-        android:layout_marginBottom="403dp"
+        android:layout_marginStart="181dp"
+        android:layout_marginEnd="91dp"
+        android:layout_marginRight="91dp"
+        android:layout_marginBottom="349dp"
         android:text="View Daily Tasks"
         tools:layout_centerHorizontal="true"
         tools:layout_centerVertical="true" />
@@ -63,8 +63,20 @@
         android:layout_marginStart="23dp"
         android:layout_marginEnd="249dp"
         android:layout_marginRight="249dp"
-        android:layout_marginBottom="403dp"
+        android:layout_marginBottom="349dp"
         android:text="View Recurring Tasks"
         tools:layout_centerHorizontal="true"
         tools:layout_centerVertical="true" />
+
+    <Button
+        android:id="@+id/viewLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginLeft="46dp"
+        android:layout_marginBottom="257dp"
+        android:text="Logout" />
 </RelativeLayout>

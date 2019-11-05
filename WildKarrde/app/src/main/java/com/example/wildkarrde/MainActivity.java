@@ -3,6 +3,7 @@ package com.example.wildkarrde;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,12 +13,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
 public class MainActivity extends AppCompatActivity {
     //declare all the buttons
     private Button addReminderButton;
     private Button viewDailyTasks;
     private Button viewRecurringTasks;
     private Button viewProfile;
+    private Button viewLogout;
     private Button viewStats;
 
     @Override
@@ -48,6 +57,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 openProfile();
+            }
+        });
+
+        viewLogout = (Button) findViewById(R.id.viewLogout);
+        viewLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    openLogout();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (CertificateException e) {
+                    e.printStackTrace();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (InvalidAlgorithmParameterException e) {
+                    e.printStackTrace();
+                } catch (KeyStoreException e) {
+                    e.printStackTrace();
+                } catch (KeyManagementException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -95,6 +126,40 @@ public class MainActivity extends AppCompatActivity {
     public void openAddEvent() {
         Intent intent = new Intent(this, addEvent.class);
         startActivity(intent);
+    }
+
+    /* ADDING LOGOUT AS AN OPTION HERE */
+    public void openLogout() throws IOException, NoSuchAlgorithmException, CertificateException, InvalidAlgorithmParameterException, KeyStoreException, KeyManagementException {
+        /* First gather the applicationContext */
+        Context appcontext = getApplicationContext();
+
+        /* making a logout object to perform actions */
+        logout logouthelper = new logout();
+
+        /* First, making the server call to delete the session */
+        boolean connresult = logouthelper.deleteServerSide(appcontext);
+
+        /* If the server successfully logged out,
+        then delete the stored cookie from stored preferences,
+        display success message, then go back to login activity
+         */
+        if(connresult) {
+            /* Then delete the stored cookie from shared preferences */
+            cookie_storage cookie_deleter = new cookie_storage();
+            cookie_deleter.delete_cookie(appcontext);
+
+            /* Then display a toast message indiciating logout */
+            Toast.makeText(this, "Logging out!", Toast.LENGTH_SHORT);
+
+            /* Then start the login activity from the main menu */
+            Intent intent = new Intent(this, login.class);
+            startActivity(intent);
+        }
+
+        /* Otherwise, just display an error message */
+        else{
+            Toast.makeText(this, "Couldn't logout", Toast.LENGTH_SHORT);
+        }
     }
 
     //here's the menu. Menu is how you add reminders, currently. select which you'd like to add from the dropdown.

@@ -1,24 +1,26 @@
 <?php
+
 /*The following code is based on the, "register.php", code example from 
  * codeshack at the following url: 
  * https://codeshack.io/secure-registration-system-php-mysql/ */
 
-/* IMPORTANT: IF DATABASE IS ON THE SAME SERVER AS PHP SCRIPT THEN LEAVE AS 
- * 'localhost' OTHERWISE PUT THE HOSTNAME OR IP ADDRESS OF THE SERVER THAT 
+/* IMPORTANT: IF DATABASE IS ON THE SAME SERVER AS PHP SCRIPT THEN LEAVE AS
+ * 'localhost' OTHERWISE PUT THE HOSTNAME OR IP ADDRESS OF THE SERVER THAT
  * HOSTS A MYSQL SYSTEM */
 $DATABASE_HOST = 'localhost';
 
-/* IMPORTANT: REPLACE USER NAME WITH MYSQL USERNAME ON OWN SERVER 
- * (can either be root or a custom user for mysql administration 
+/* IMPORTANT: REPLACE USER NAME WITH MYSQL USERNAME ON OWN SERVER
+ * (can either be root or a custom user for mysql administration
  * purposes) */
 $DATABASE_USER = '*****';
 
-/* IMPORTANT: REPLACE PASSWORD WITH MYSQL PASSWORD ON OWN SERVER 
- * (can either be root or a custom user for mysql administration 
+
+/* IMPORTANT: REPLACE PASSWORD WITH MYSQL PASSWORD ON OWN SERVER
+ * (can either be root or a custom user for mysql administration
  * purposes) */
 $DATABASE_PASS = '*****';
 
-/* IMPORTANT: REPLACE DATABASE_NAME WITH THE NAME OF A DATABASE THAT CONTAINS 
+/* IMPORTANT: REPLACE DATABASE_NAME WITH THE NAME OF A DATABASE THAT CONTAINS
 	* A USER ACCOUNT TABLE */
 $DATABASE_NAME = '*****';
 
@@ -72,7 +74,7 @@ if($stmt = $conn->prepare('SELECT uid, password FROM users WHERE user_name = ? O
 
 	/* IF NECESSARY PUT PASSWORD VALIDATION TECHNIQUES HERE FROM BOTH 
 	 * codeshack source, and "PHP:Creating Secure Website" linkedin learning
-	 * course (ask group members) */
+	 * course */
 
 	/* BINDING THE POST PARAMETERS TO THE PREPARED STATEMENT */
 	/* NOTE THAT SINCE email and username are varchar in the table, we 

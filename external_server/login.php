@@ -33,19 +33,22 @@ if ( mysqli_connect_errno() ) {
 	die ('Could not connect to MYSQL. Check variable values, and check mysql status: ' . mysqli_connect_error());
 }
 
-
 /* If a user either did not enter a username and password, or an email and
 	* password, then terminate and state that the user needs to enter either
 	* a user name or email and a password */
-if ( (!isset($_POST['user_name'], $_POST['password'])) || (!isset($_POST['email'], $_POST['password'])) ) 
+$usercombo = isset($_POST['user_name'], $_POST['password']);
+$emailcombo = isset($_POST['email'], $_POST['password']);
+$eitherset = ($emailcombo || $usercombo);
+
+if ($eitherset == false) 
 {
-	/* Stating error to user */
+	// Stating error to user
 	die ('Please provide either a username and password or an email and password');
 }
 
 
 // Checking to see if the user exists using an SQL Prepared Statement.
-if ($stmt = $conn->prepare('SELECT uid, password FROM users WHERE user_name = ? OR email = ?')) 
+if ($stmt = $conn->prepare('SELECT uid, password, user_name FROM users WHERE user_name = ? OR email = ?')) 
 {
 	/* Checking for the existence of a user name or email by binding
 		* user_name and email accordingly */
@@ -61,10 +64,10 @@ if ($stmt = $conn->prepare('SELECT uid, password FROM users WHERE user_name = ? 
 	/* If a user was found with a matching user name or password */
 	if ($stmt->num_rows > 0) 
 	{
-		/* Binding the user id and password results from the prepared
+		/* Binding the user id, password, and user_name results from the prepared
 		 * statement to the uid and password variables to work with in
 		 * php */
-		$stmt->bind_result($uid, $password);
+		$stmt->bind_result($uid, $password, $user_name);
 
 		/* Fetching the user id and password from the prepared statement
 		 * query results */
@@ -82,7 +85,7 @@ if ($stmt = $conn->prepare('SELECT uid, password FROM users WHERE user_name = ? 
 			 * true */
 			$_SESSION['loggedin'] = TRUE;
 			/* Set the associated username with their session */
-			$_SESSION['user_name'] = $_POST['user_name'];
+			$_SESSION['user_name'] = $user_name;
 			/* Set the associated userid with their session */
 			$_SESSION['uid'] = $uid;
 			/* Echoing a response indicating that the login was
