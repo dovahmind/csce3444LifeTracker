@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="text"
-        android:hint="Event Name" />
+        android:hint="Name" />
     <!--enter in the date.
     for now just a string.-->
     <EditText
@@ -23,19 +23,39 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="date"
-        android:hint="Event Date"
+        android:hint="Date"
         android:layout_below="@+id/enterEventName"/>
 
-    "
-<!-- Date picker????
-    <DatePicker
-        android:id="@+id/enterEventDate"
-        android:layout_width="wrap_content"
-        android:layout_height="404dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="70dp" />
--->
+    <EditText
+        android:id="@+id/enterStringEventLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="text"
+        android:hint="Location"
+        android:layout_below="@+id/enterStringEventDate"/>
+
+    <EditText
+        android:id="@+id/enterEventDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="textMultiLine"
+        android:hint="Description"
+        android:layout_below="@+id/enterStringEventLocation"/>
+
+    <EditText
+        android:id="@+id/enterEventTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="time"
+        android:hint="Time"
+        android:layout_below="@+id/enterEventDescription"/>
+
     <Button
         android:id="@+id/initEvent"
         android:layout_width="wrap_content"

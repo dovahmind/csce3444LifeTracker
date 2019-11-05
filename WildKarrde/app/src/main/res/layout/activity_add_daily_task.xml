@@ -16,19 +16,50 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:inputType="text"
-        android:hint="Enter Daily Task Name"/>
+        android:hint="Name"/>
     <!--enter in the date.
     for now just a string.-->
+
+    //this needs to be a checkbox thing where you select the days of the week instead
     <EditText
         android:id="@+id/enterDailyDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Enter Daily Task Date"
+        android:hint="Task Date"
         android:inputType="date"
         android:layout_below="@+id/enterDailyName"/>
 
+    <EditText
+        android:id="@+id/enterStringDailyLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="text"
+        android:hint="Location"
+        android:layout_below="@+id/enterDailyDate"/>
+
+    <EditText
+        android:id="@+id/enterDailyDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="textMultiLine"
+        android:hint="Description"
+        android:layout_below="@+id/enterStringDailyLocation"/>
+
+    <EditText
+        android:id="@+id/enterDailyTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:inputType="time"
+        android:hint="Time"
+        android:layout_below="@+id/enterDailyDescription"/>
     <Button
         android:id="@+id/initDailyTask"
         android:layout_width="wrap_content"

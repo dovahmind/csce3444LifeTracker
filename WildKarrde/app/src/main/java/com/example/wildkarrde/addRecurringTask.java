@@ -33,6 +33,16 @@ public class addRecurringTask extends AppCompatActivity {
         EditText date = (EditText) findViewById(R.id.enterRecurringDate);
         String recurringDate = date.getText().toString();
 
+        EditText location = (EditText) findViewById(R.id.enterStringRecurringLocation);
+        String recurringLocation = location.getText().toString();
+
+        EditText description = (EditText) findViewById(R.id.enterRecurringDescription);
+        String recurringDescription = description.getText().toString();
+
+        EditText time = (EditText) findViewById(R.id.enterRecurringTime);
+        String recurringTime = time.getText().toString();
+
+        //initialize a new daily task to be added to backend!
         //need to pass reccuring task info to backend.
     }
 

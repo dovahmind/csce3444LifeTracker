@@ -31,6 +31,14 @@ public class addDailyTask extends AppCompatActivity {
         EditText date = (EditText) findViewById(R.id.enterDailyDate);
         String dailyTaskDate = date.getText().toString();
 
+        EditText location = (EditText) findViewById(R.id.enterStringDailyLocation);
+        String dailyLocation = location.getText().toString();
+
+        EditText description = (EditText) findViewById(R.id.enterDailyDescription);
+        String dailyDescription = description.getText().toString();
+
+        EditText time = (EditText) findViewById(R.id.enterDailyTime);
+        String dailyTime = time.getText().toString();
         //initialize a new daily task to be added to backend!
 
     }

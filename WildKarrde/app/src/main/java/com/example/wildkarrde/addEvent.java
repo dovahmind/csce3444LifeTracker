@@ -30,6 +30,16 @@ public class addEvent extends AppCompatActivity {
         EditText date = (EditText) findViewById(R.id.enterStringEventDate);
         String eventDate = date.getText().toString();
 
+        EditText location = (EditText) findViewById(R.id.enterStringEventLocation);
+        String eventLocation = location.getText().toString();
+
+        EditText description = (EditText) findViewById(R.id.enterEventDescription);
+        String eventDescription = description.getText().toString();
+
+        EditText time = (EditText) findViewById(R.id.enterEventTime);
+        String eventTime = time.getText().toString();
+        //initialize a new daily task to be added to backend!
+
         //initialize event and put it in backend!!!
     }
 }
