@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private Button addReminderButton;
     private Button viewDailyTasks;
     private Button viewRecurringTasks;
-    private Button viewProfile;
     private Button viewLogout;
     private Button viewStats;
 
@@ -53,13 +52,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewProfile = (Button) findViewById(R.id.viewRecurringTasks);
-        viewProfile.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openProfile();
-            }
-        });
 
         viewLogout = (Button) findViewById(R.id.viewLogout);
         viewLogout.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +177,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.addEvent:
                 openAddEvent();
+                return true;
+            case R.id.profileIcon:
+                openProfile();
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
