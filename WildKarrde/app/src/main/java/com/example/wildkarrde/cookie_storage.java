@@ -20,7 +20,7 @@ public class cookie_storage {
     {
         preferences = inpcontext.getSharedPreferences("com.example.wildkarrde", MODE_PRIVATE);
 
-        String cookie = preferences.getString("cookie", null);
+        String cookie = preferences.getString("Cookie", null);
 
         if(cookie!=null){
             return cookie;
@@ -29,6 +29,16 @@ public class cookie_storage {
         {
             return "no cookie!";
         }
+    }
+
+    public void delete_cookie(Context inpcontext)
+    {
+        preferences = inpcontext.getSharedPreferences("com.example.wildkarrde", MODE_PRIVATE);
+
+        editor = preferences.edit();
+
+        editor.remove("Cookie");
+        editor.commit();
     }
     
 }

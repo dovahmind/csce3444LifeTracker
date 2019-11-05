@@ -28,22 +28,17 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //CREATE CHECK COOKIE FUNCTION HERE AND THEN CALL IT BEFORE MAKING LAYOUT
-
-        setContentView(R.layout.activity_login);
-
-        getSupportActionBar().setTitle("Login");
-
-        Button button = (Button) findViewById(R.id.loginUser);
-
         /* Before doing anything else, check to see if there
         is a cookie in storage, and if there is then go to MainActivity */
         String conf = "no cookie!";
 
-        Context currcontext = this;
+        Context currcontext = getApplicationContext();
 
         cookie_storage cookie_retriever = new cookie_storage();
 
         String cookieresult = cookie_retriever.get_cookie(currcontext);
+
+        System.out.println("The cookie result is: " + cookieresult + "\n");
 
         if (!cookieresult.equals(conf))
         {
@@ -52,8 +47,14 @@ public class login extends AppCompatActivity {
         }
 
         else{
-            Toast.makeText(this, "Couldn't retrieve cookie!", Toast.LENGTH_SHORT);
+            System.out.println("Couldn't retrieve cookie!\n");
         }
+
+        setContentView(R.layout.activity_login);
+
+        getSupportActionBar().setTitle("Login");
+
+        Button button = (Button) findViewById(R.id.loginUser);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -111,13 +112,15 @@ public class login extends AppCompatActivity {
         grabbed by non-activity functions, and data can easily be
         passed around
          */
-        Context regis = this;
+        Context logincontext = getApplicationContext();
 
         loginhelper loginattempt = new loginhelper();
 
         String attr[] = {login_user, login_pass};
 
-        result = loginattempt.connectionattempt(regis, attr);
+        result = loginattempt.connectionattempt(logincontext, attr);
+
+        System.out.println("Result from connection attempt is:" + result + "\n");
 
         String successstr = "success";
         login_success = result.toLowerCase().contains(successstr.toLowerCase());
@@ -126,9 +129,11 @@ public class login extends AppCompatActivity {
             System.out.println("The result was successful.\n");
             startActivity(intent);
         }
+
+        // ISSUE DISPLAYING ERROR MESSAGE HERE! maybe due to getapplicationcontect() from logincontext?
         else {
-            //Toast.makeText(this, "Invalid login. Try a different Username or Password.", Toast.LENGTH_SHORT);
-            Toast.makeText(this, result, Toast.LENGTH_SHORT);
+            Toast.makeText(logincontext, "Invalid login. Try a different Username or Password.", Toast.LENGTH_SHORT);
+            //Toast.makeText(regis, result, Toast.LENGTH_LONG);
         }
     }
 }
