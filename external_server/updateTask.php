@@ -5,7 +5,7 @@ $response = array();
 //Check for mandatory parameters
 //$EUID, $Type, $Title, $Location, $Date, $UserID, $Description, $Time, $Complete
 if(isset($_POST['EUID'])&&isset($_POST['Type'])&&isset($_POST['Title'])&&isset($_POST['Location'])&&isset($_POST['Date'])&&isset($_POST['UserID'])&&isset($_POST['Description'])&&isset($_POST['Time'])&&isset($_POST['Complete'])){
-	$EUIDe = $_POST['EUID'];
+	$EUID = $_POST['EUID'];
 	$Type = $_POST['Type'];
 	$Title = $_POST['Title'];
 	$Location = $_POST['Location'];
