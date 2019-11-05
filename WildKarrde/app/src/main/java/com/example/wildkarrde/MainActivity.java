@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //here is where we will display whatever current tasks we have. Need to find a solution!
 
         //comments above repeat for all of the rest
         viewDailyTasks = (Button) findViewById(R.id.viewDailyTasks);
