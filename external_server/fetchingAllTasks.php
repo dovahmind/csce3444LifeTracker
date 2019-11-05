@@ -16,14 +16,14 @@ if($stmt = $con->prepare($query)){
 		//Populate the task array
 		$movieArray["EUID"] = $EUID;
 		$movieArray["Type"] = $Type;
-    $movieArray["Title"] = $Title;
-    $movieArray["Location"] = $Location;
-    $movieArray["Date"] = $Date;
-    $movieArray["UserID"] = $UserID;
-    $movieArray["Description"] = $Description;
-    $movieArray["Time"] = $Time;
-    $movieArray["Complete"] = $Complete;
-    $result[]=$tasksArray;
+    		$movieArray["Title"] = $Title;
+   		$movieArray["Location"] = $Location;
+  		$movieArray["Date"] = $Date;
+    		$movieArray["UserID"] = $UserID;
+    		$movieArray["Description"] = $Description;
+    		$movieArray["Time"] = $Time;
+    		$movieArray["Complete"] = $Complete;
+    		$result[]=$tasksArray;
 		
 	}
 	$stmt->close();
