@@ -157,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    //here's the menu. Menu is how you add reminders, currently. select which you'd like to add from the dropdown.
-    //I'm not attached to this design of how adding reminders works. Let me know what y'all think.
+    //here's the menu. Menu is how you add Reminder, currently. select which you'd like to add from the dropdown.
+    //I'm not attached to this design of how adding Reminder works. Let me know what y'all think.
     @Override // here I have created the menu at the top of the application
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater(); //inflates menu to show all the options

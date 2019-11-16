@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".addDailyTask">
 
-    <!--enter the name of the reminder
+    <!--enter the name of the Reminder
     issa string!-->
 
     <EditText

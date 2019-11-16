@@ -39,18 +39,26 @@ if(!isset($_SESSION['loggedin']))
 
 else
 {
+	/* A variable that will store the reminder id from the main 
+	 * reminder table if there is a reminder of a different type */
+	$rid;
 
 	/* Retrieving the user id from their session */
 	$uid = $_SESSION['uid'];
 
 	$uidint = intval($uid);	
+	
+	if(!isset($_POST['json_data']))
+	{
+		die("Error! Didn't send json_data parameter!");
+	}
 
 	/* Decoding the json received */
 	$json = $_POST['json_data'];
 
 	if($json == NULL)
 	{
-		die("Error! Didn't send json_data!");
+		die("Error! Didn't send any json_data!");
 
 	}
 	
@@ -65,7 +73,7 @@ else
 	
 	$description = $jsonobj->{'description'};	
 
-	if($jsonobj->{'start_time'} != NULL)
+	if(isset($jsonobj->{'start_time'}))
 	{
 		$start_time = $jsonobj->{'start_time'};
 	}
@@ -75,7 +83,7 @@ else
 		$start_time = "00:00:00";
 	}
 
-	if($jsonobj->{'end_time'} != NULL)
+	if(isset($jsonobj->{'end_time'}))
 	{
 		$end_time = $jsonobj->{'end_time'};
 	}
@@ -85,39 +93,238 @@ else
 		$end_time = "00:00:00";
 	}	
 
-	$completed = $jsonobj->{'completed'};
+	if(isset($jsonobj->{'completed'}))
+	{
+		$completed = $jsonobj->{'completed'};
+	}
+
+	else
+	{
+		$completed = 0;
+	}
 
 	$completedint = intval($completed);
 
 
-	/* FOCUSING ON SINGLE EVENTS FOR NOW */
-	if($type == "event")
+	//if($type == "event")
+	//{
+	/* Make a prepared statement for just the REMINDERS table */
+	if ($stmt = $conn->prepare('INSERT INTO reminders (uid, type, title, date, description, start_time, end_time, completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')) 
+	{	
+		/* Binding all  ... */
+		$stmt->bind_param('issssssi', $uidint, $type, $title, $date, $description, $start_time, $end_time, $completedint);
+
+		$stmt->execute();
+
+		$rid = $stmt->insert_id;
+
+		
+		echo 'reminder success! ';
+	} 
+
+	else 
 	{
-		/* Make a prepared statement for just the REMINDERS table */
-		if ($stmt = $conn->prepare('INSERT INTO reminders (uid, type, title, date, description, start_time, end_time, completed) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')) 
-		{	
+		// Something is wrong with the sql statement, 
+		// check to make sure accounts table exists with all 3 fields.
+		die('Error! Could not prepare statement!');
+	}
+	//}
+
+	/* If it was a reocurring task, then gather additional information here */
+	if($type == "reocc")
+	{
+		/* If the reminder id could not be gathered from the initial 
+		 * insertion into the reminders table, then terminate here */
+		if($rid == null)
+		{
+			die('Error! Could not get reminder id from initial insertion!');
+		}
+
+		/* Gather the month_time_interval from the json */
+		if(isset($jsonobj->{'month_time_int'}))
+		{
+			$month_time_int = $jsonobj->{'month_time_int'};
+		}
+
+		else
+		{
+			$month_time_int = 0;
+		}
+
+		/* Gather the weekly_time_interval from the json if it is available */
+		if(isset($jsonobj->{'week_time_int'}))
+		{
+			$week_time_int = $jsonobj->{'week_time_int'};
+		}
+
+		else
+		{
+			$week_time_int = 0;
+		}
+
+		/* Gather daily_time_interval from the json if it is available */
+
+		if(isset($jsonobj->{'day_time_int'}))
+		{
+			$day_time_int = $jsonobj->{'day_time_int'};
+		}
+
+		else
+		{
+			$day_time_int = 0;
+		}
+
+		/* Gather if it is a consumable item or not. (This will be 
+		 * incorporated to additional functionality if we have time 
+		 * before November 25th) */
+		if(isset($jsonobj->{'consumable'}))
+		{
+			if($jsonobj->{'consumable'} == 1)
+			{
+				$consumable = 1;
+
+				/* IF TIME GATHER ADDITIONAL INFORMATION FROM
+				 * THE JSON AND MAKE AN AMAZON OR OTHER THIRD
+				 * PARTY API REQUEST STRING TO STORE (BEFORE
+				 * NOV 25) */
+			}
+
+			else
+			{
+				$consumable = 0;
+			}
+		}
+
+		else
+		{
+			$consumable = 0;
+		}
+
+		$prepare_string = 'INSERT INTO recurring_tasks (rid, month_time_int, week_time_int, day_time_int, consumable) VALUES (?, ?, ?, ?, ?)'; 
+
+		/* Then insert this into the reoccurring task table */
+		if ($stmt = $conn->prepare($prepare_string)){
 			/* Binding all  ... */
-			$stmt->bind_param('issssssi', $uidint, $type, $title, $date, $description, $start_time, $end_time, $completedint);
+			$stmt->bind_param('iiiii', $rid, $month_time_int, $week_time_int, $day_time_int, $consumable);
 
 			$stmt->execute();
-			
-			echo 'Successfully inserted reminder!';	
+
+			echo 'reoccuring task success!';		
 		} 
 
 		else 
 		{
 			// Something is wrong with the sql statement, 
 			// check to make sure accounts table exists with all 3 fields.
-			echo 'Could not prepare statement!';
+			die('Error! Could not prepare statement!');
+		}
+	}	
+
+	if($type == "habit")
+	{
+		/* If the reminder id could not be gathered from the initial 
+		 * insertion into the reminders table, then terminate here */
+		if($rid == null)
+		{
+			die('Error! Could not get reminder id from initial insertion!');
+		}
+
+		/* Gather the integer array from the json document */
+		if(isset($jsonobj->{'day_names'}))
+		{
+			$dayarr = $jsonobj->{'day_names'};
+		}
+
+		else
+		{
+			die('Error! The days for the habit were not specified!');
+		}	
+
+
+		/* Initial declaration of day values for database insertion */
+		$everyday = 0;
+		$mon = 0;
+		$tue = 0;
+		$wed = 0;
+		$thu = 0;
+		$fri = 0;
+		$sat = 0;
+		$sun = 0;
+		
+
+		/* Going through all possible values in the array (0th index = everyday, 
+		 * 1 = monday, ..., 7 = sunday) and determining what the bool 
+		 * val (reminder: 1 = true, 0 = false) should be set to */
+		if($dayarr[0] == 1)
+		{
+			$everyday = 1;
+		}
+
+		if($dayarr[1] == 1)
+		{
+			$mon = 1;
+		}
+			
+		if($dayarr[2] == 1)
+		{
+			$tue = 1;
+
+		}
+
+		if($dayarr[3] == 1)
+		{
+			$wed = 1;
+
+		}
+
+		if($dayarr[4] == 1)
+		{
+			$thu = 1;
+
+		}
+			
+		if($dayarr[5] == 1)
+		{
+			$fri = 1;
+
+		}
+
+		if($dayarr[6] == 1)
+		{
+			$sat = 1;
+
+		}
+
+		if($dayarr[7] == 1)
+		{
+			$sun = 1;
+
+		}
+
+		$prepare_string = 'INSERT INTO habits (rid, everyday, mon, tue, wed, thu, fri, sat, sun) VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?)'; 
+
+		/* Then insert this into the habits task table */
+		if ($stmt = $conn->prepare($prepare_string)){
+			/* Binding all  ... */
+			$stmt->bind_param('iiiiiiiii', $rid, $everyday, $mon, $tue, $wed, $thu, $fri, $sat, $sun);
+
+			$stmt->execute();	
+
+			if($stmt == 0)
+			{
+				die('Error! Could not execute statement!');
+			}
+
+			echo 'habit success!';
+		} 
+
+		else 
+		{
+			// Something is wrong with the sql statement, 
+			// check to make sure accounts table exists with all 3 fields.
+			die('Could not prepare statement!');
 		}
 	}
-
-	/* WHEN ADDING OTHER TASKS USE TRANSACTIONS AND PREPARED STATEMENTS!
-	 * MORE INFO HERE: 
-	 * https://stackoverflow.com/questions/5178697/mysql-insert-into-multiple-tables-database-normalization
-	 * AND MORE INFO HERE:
-	 * https://stackoverflow.com/questions/5124546/select-last-insert-id-returns-0-after-using-prepared-statement?rq=1
-	 */
 }
 
 /* Closing the mysqli connection when we are done with it */
