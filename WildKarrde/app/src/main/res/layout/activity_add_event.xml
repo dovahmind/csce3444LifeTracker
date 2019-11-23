@@ -47,14 +47,26 @@
         android:layout_below="@+id/enterStringEventLocation"/>
 
     <EditText
-        android:id="@+id/enterEventTime"
+        android:id="@+id/enterStartTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterEventDescription"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="time"
-        android:hint="Time"
-        android:layout_below="@+id/enterEventDescription"/>
+        android:hint="Start Time"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/enterEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterEventDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="16dp"
+        android:hint="End Time"
+        android:inputType="time" />
 
     <Button
         android:id="@+id/initEvent"

@@ -83,7 +83,7 @@ public class logout{
         String[] cookielist = raw_cookie.split(";");
         String cookie_value = cookielist[0];
 
-        System.out.println("Cookie value is: " + cookie_value + "\n");
+        //System.out.println("Cookie value is: " + cookie_value + "\n");
 
         /* Setting the urlConnection's output option to true */
         urlConnection.setDoOutput(true);
