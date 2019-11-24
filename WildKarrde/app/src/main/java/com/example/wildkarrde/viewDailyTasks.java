@@ -10,6 +10,13 @@ public class viewDailyTasks extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_daily_tasks);
+
+        //get arraylist of items
+
+        //need to have recycler view for viewdailytasks
+
+
+        //declare adapter and stuff
     }
 
 }
