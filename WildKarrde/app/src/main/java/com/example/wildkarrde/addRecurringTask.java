@@ -44,6 +44,11 @@ public class addRecurringTask extends AppCompatActivity {
 
         //initialize a new daily task to be added to backend!
         //need to pass reccuring task info to backend.
+
+        String method = "AddR";//Method call to add a recurring task. Used in Background Task
+        BackgroundTask backgroundTask = new BackgroundTask(this);
+        backgroundTask.execute(method, name, date, location, description, time);
+        finish();
     }
 
 
