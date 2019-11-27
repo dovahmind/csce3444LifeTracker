@@ -7,13 +7,13 @@ import androidx.room.*;
 info that is retrieved from the server
  */
 
-/* Note that this will only contain the reminders that are gathered from view_daily_reminders.
+/* Note that this will only contain the reminders that are gathered from view_recurring_tasks.
 When a user presses this and a connection is successfully made to the server,
 then all stuff originally in the database is deleted and replaced with current information.
  */
 
-@Entity(tableName = "reminders")
-public class Reminder {
+@Entity(tableName = "recurring_tasks")
+public class Reocc {
 
     @PrimaryKey
     @NonNull
@@ -41,8 +41,11 @@ public class Reminder {
     @ColumnInfo(name = "completed")
     private boolean completed;
 
-    public Reminder(int rid, String type, String title, String date, String description,
-                    String start_time, String end_time, boolean completed)
+    @ColumnInfo(name = "upcom")
+    private String upcom;
+
+    public Reocc(int rid, String type, String title, String date, String description,
+                    String start_time, String end_time, boolean completed, String upcom)
     {
         this.rid = rid;
         this.type = type;
@@ -52,6 +55,7 @@ public class Reminder {
         this.start_time = start_time;
         this.end_time = end_time;
         this.completed = completed;
+        this.upcom = upcom;
     }
 
     public int getRid(){
@@ -84,5 +88,9 @@ public class Reminder {
 
     public boolean getCompleted(){
         return this.completed;
+    }
+
+    public String getUpcom(){
+        return this.upcom;
     }
 }

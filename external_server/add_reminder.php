@@ -70,6 +70,12 @@ else
 	$title = $jsonobj->{'title'};
 
 	$date = $jsonobj->{'date'};
+
+	/* Removing the new line characters from date */
+	$date = str_replace("\n", "", $date);
+
+	/* Formatting the date to work with DateTime */
+	$date = str_replace("\/", "-", $date);	
 	
 	$description = $jsonobj->{'description'};	
 
@@ -119,7 +125,7 @@ else
 		$rid = $stmt->insert_id;
 
 		
-		echo 'reminder success! ';
+		echo 'reminder success! ';	
 	} 
 
 	else 
@@ -200,12 +206,31 @@ else
 			$consumable = 0;
 		}
 
-		$prepare_string = 'INSERT INTO recurring_tasks (rid, month_time_int, week_time_int, day_time_int, consumable) VALUES (?, ?, ?, ?, ?)'; 
+		/* Calculate the upcoming date based on the intervals and the 
+		 * date provided by the user */
+
+		
+		/* Making a temporary date time object out of the date variable */
+		$dt = new DateTime($date);
+
+		/* Forming date arithmetic string from intervals */
+		$dateadder = "$month_time_int" . " months" . "$week_time_int" . " weeks" . "$day_time_int" . " days";
+
+		/* Adding the intervals */
+		date_add($dt,date_interval_create_from_date_string($dateadder));
+
+
+		/*Converting the date to a string for mysql */
+		$upcom = $dt->format('Y-m-d');
+
+
+		$prepare_string = 'INSERT INTO recurring_tasks (rid, month_time_int, week_time_int, day_time_int, consumable, upcom) VALUES (?, ?, ?, ?, ?, ?)'; 
+		
 
 		/* Then insert this into the reoccurring task table */
 		if ($stmt = $conn->prepare($prepare_string)){
 			/* Binding all  ... */
-			$stmt->bind_param('iiiii', $rid, $month_time_int, $week_time_int, $day_time_int, $consumable);
+			$stmt->bind_param('iiiiis', $rid, $month_time_int, $week_time_int, $day_time_int, $consumable, $upcom);
 
 			$stmt->execute();
 
@@ -241,72 +266,94 @@ else
 		}	
 
 
+		/* Forming a proper array from day arr */
+
+		/* First removing the [ and ] characters */
+		$dayarr = str_replace("[", "", $dayarr);
+		$dayarr = str_replace("]", "", $dayarr);	
+
+
+		/* Then using explode to get each element separated by a comma */
+		$dayarr = explode(",", $dayarr);	
+
 		/* Initial declaration of day values for database insertion */
-		$everyday = 0;
+		//$everyday = 0;
 		$mon = 0;
 		$tue = 0;
 		$wed = 0;
 		$thu = 0;
 		$fri = 0;
 		$sat = 0;
-		$sun = 0;
-		
+		$sun = 0;	
 
 		/* Going through all possible values in the array (0th index = everyday, 
 		 * 1 = monday, ..., 7 = sunday) and determining what the bool 
 		 * val (reminder: 1 = true, 0 = false) should be set to */
+
+		/* If everyday is set, then set monday through sunday to 1 */
 		if($dayarr[0] == 1)
 		{
-			$everyday = 1;
-		}
-
-		if($dayarr[1] == 1)
-		{
 			$mon = 1;
-		}
-			
-		if($dayarr[2] == 1)
-		{
 			$tue = 1;
-
-		}
-
-		if($dayarr[3] == 1)
-		{
 			$wed = 1;
-
-		}
-
-		if($dayarr[4] == 1)
-		{
 			$thu = 1;
-
-		}
-			
-		if($dayarr[5] == 1)
-		{
 			$fri = 1;
-
-		}
-
-		if($dayarr[6] == 1)
-		{
 			$sat = 1;
-
-		}
-
-		if($dayarr[7] == 1)
-		{
 			$sun = 1;
-
 		}
 
-		$prepare_string = 'INSERT INTO habits (rid, everyday, mon, tue, wed, thu, fri, sat, sun) VALUES (?, ?, ?, ?, ?, ?, ? , ?, ?)'; 
+		/* Otherwise, determine which days where set to true based on
+		 * their position in the array */
+		else
+		{
+			if($dayarr[1] == 1)
+			{
+				$mon = 1;
+			}
+				
+			if($dayarr[2] == 1)
+			{
+				$tue = 1;
 
-		/* Then insert this into the habits task table */
+			}
+
+			if($dayarr[3] == 1)
+			{
+				$wed = 1;
+
+			}
+
+			if($dayarr[4] == 1)
+			{
+				$thu = 1;
+
+			}
+				
+			if($dayarr[5] == 1)
+			{
+				$fri = 1;
+
+			}
+
+			if($dayarr[6] == 1)
+			{
+				$sat = 1;
+
+			}
+
+			if($dayarr[7] == 1)
+			{
+				$sun = 1;
+
+			}
+		}
+
+		$prepare_string = 'INSERT INTO habits (rid, mon, tue, wed, thu, fri, sat, sun) VALUES (?, ?, ?, ?, ?, ? , ?, ?)'; 
+
+		/* Then insert this into the reoccurring task table */
 		if ($stmt = $conn->prepare($prepare_string)){
 			/* Binding all  ... */
-			$stmt->bind_param('iiiiiiiii', $rid, $everyday, $mon, $tue, $wed, $thu, $fri, $sat, $sun);
+			$stmt->bind_param('iiiiiiii', $rid, $mon, $tue, $wed, $thu, $fri, $sat, $sun);
 
 			$stmt->execute();	
 
