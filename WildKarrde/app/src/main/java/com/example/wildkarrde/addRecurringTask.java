@@ -167,6 +167,9 @@ public class addRecurringTask extends AppCompatActivity {
 
          */
 
+        /* Forming a JSON object for a recurring task specifically, refer to
+        * add_reminder.php for names required in put
+         */
         JSONObject reocctask = new JSONObject();
 
         try {
