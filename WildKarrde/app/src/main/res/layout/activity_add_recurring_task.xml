@@ -20,45 +20,100 @@
         android:id="@+id/enterRecurringDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringName"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Recurring Date"
-        android:inputType="date"
-        android:layout_below="@+id/enterRecurringName"/>
+        android:hint="Starting Date"
+        android:inputType="date" />
+
+    <EditText
+        android:id="@+id/enterRecurringMonthInt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringName"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Month Interval (Default: 0)"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/enterRecurringWeekInt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringName"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Week Interval (Default: 0)"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/enterRecurringDayInt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringName"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="314dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Day Interval (Default: 0)"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/enterStringRecurringLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringDate"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="1dp"
         android:layout_marginEnd="16dp"
-        android:inputType="text"
         android:hint="Event Location"
-        android:layout_below="@+id/enterRecurringDate" />
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/enterRecurringStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringDescription"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="16dp"
+        android:hint="Start Time"
+        android:inputType="time" />
+
+    <EditText
+        android:id="@+id/enterRecurringEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/enterRecurringDescription"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="16dp"
+        android:hint="End Time"
+        android:inputType="time" />
+
     <EditText
         android:id="@+id/enterRecurringDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterStringRecurringLocation"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="-1dp"
         android:layout_marginEnd="16dp"
-        android:inputType="textMultiLine"
         android:hint="Description"
-        android:layout_below="@+id/enterStringRecurringLocation"/>
-
-    <EditText
-        android:id="@+id/enterRecurringTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:inputType="time"
-        android:hint="Time"
-        android:layout_below="@+id/enterRecurringDescription"/>
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/initRecurringTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="131dp"
         android:text="Add Reminder" />
 </RelativeLayout>
