@@ -29,13 +29,21 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 
-
+class sortByTime implements Comparator<DailyTask>
+{
+    public int compare(DailyTask a, DailyTask b)
+    {
+        return b.getDate().compareTo(a.getDate());
+    }
+}
 
 
 public class viewDailyTasks extends AppCompatActivity {
@@ -87,8 +95,9 @@ public class viewDailyTasks extends AppCompatActivity {
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Take out Trash", "4:45-5:00am"));
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
     */
-
+        taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
         //sorting the taskList to be from earliest task to latest
+        Collections.sort(taskList, new sortByTime());
 
     }
 
