@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,6 +34,7 @@ import java.util.Date;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
+
 
 
 
@@ -66,11 +69,18 @@ public class viewDailyTasks extends AppCompatActivity {
         taskList = new ArrayList<>();
 
         /* THIS IS WHERE JSON PARSING WILL BE DONE FROM the json_data String! */
-        //Test Commit
+
+        JSONObject jsonObject = new JSONObject(json_data.toString());
+        taskList.add(new DailyTask(R.drawable.ic_not_done, "ID: "+jsonObject.getString("rid"),
+                "Type: "+jsonObject.getString("type"), "Title" +jsonObject.getString("Title"),
+                "Date: "+jsonObject.getString("Date"), "Description:"+jsonObject.getString("Description"),
+                "Start Time: "+jsonObject.getString("start_time"), "End Time: "+jsonObject.getString("end_time")));
+
         //here is where I would get and populate new arraylist to display.
+        /*
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Take out Trash", "4:45-5:00am"));
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
-    }
+    */}
     public void buildDailyRecyclerView(){
         DailyRecyclerView = findViewById(R.id.dailyRecyclerView);
         DailyRecyclerView.setHasFixedSize(true);
