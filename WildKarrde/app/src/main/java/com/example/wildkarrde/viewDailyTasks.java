@@ -60,17 +60,6 @@ public class viewDailyTasks extends AppCompatActivity {
          * to the server, and storing the server's response into serv_response */
         connectionattempt attempter = new connectionattempt();
         attempter.execute(phonedate);
-
-        /* If the server response was not successful, then display
-         * the error message returned from the server. Otherwise,
-         * create the list of items, then build the recycler
-         * view from this
-         */
-
-
-
-
-
     }
 
     public void createTaskList(String json_data){
