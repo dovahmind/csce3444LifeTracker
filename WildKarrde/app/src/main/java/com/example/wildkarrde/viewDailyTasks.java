@@ -86,7 +86,12 @@ public class viewDailyTasks extends AppCompatActivity {
         /*
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Take out Trash", "4:45-5:00am"));
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
-    */}
+    */
+
+        //sorting the taskList to be from earliest task to latest
+
+    }
+
     public void buildDailyRecyclerView(){
         DailyRecyclerView = findViewById(R.id.dailyRecyclerView);
         DailyRecyclerView.setHasFixedSize(true);
