@@ -33,7 +33,7 @@
         android:layout_below="@+id/enterRecurringName"
         android:layout_centerInParent="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="135dp"
         android:layout_marginEnd="16dp"
         android:hint="Month Interval (Default: 0)"
         android:inputType="number" />
@@ -45,7 +45,7 @@
         android:layout_below="@+id/enterRecurringName"
         android:layout_centerInParent="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="181dp"
         android:layout_marginEnd="16dp"
         android:hint="Week Interval (Default: 0)"
         android:inputType="number" />
@@ -57,7 +57,7 @@
         android:layout_below="@+id/enterRecurringName"
         android:layout_centerInParent="true"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="314dp"
+        android:layout_marginTop="225dp"
         android:layout_marginEnd="16dp"
         android:hint="Day Interval (Default: 0)"
         android:inputType="number" />
@@ -73,29 +73,6 @@
         android:layout_marginEnd="16dp"
         android:hint="Event Location"
         android:inputType="text" />
-
-    <EditText
-        android:id="@+id/enterRecurringStartTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enterRecurringDescription"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Start Time"
-        android:inputType="time" />
-
-    <EditText
-        android:id="@+id/enterRecurringEndTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/enterRecurringDescription"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="16dp"
-        android:hint="End Time"
-        android:inputType="time" />
 
     <EditText
         android:id="@+id/enterRecurringDescription"
