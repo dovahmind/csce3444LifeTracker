@@ -58,7 +58,7 @@
         android:layout_below="@+id/enterDailyDescription"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Start Time"
+        android:hint="Start Time (00:XX-23:XX)"
         android:inputType="time" />
 
     <EditText
@@ -70,7 +70,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="16dp"
-        android:hint="End Time"
+        android:hint="End Time (00:XX-23:XX)"
         android:inputType="time" />
 
     <Button
