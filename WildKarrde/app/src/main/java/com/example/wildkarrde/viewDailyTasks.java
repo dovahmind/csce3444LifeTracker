@@ -70,10 +70,15 @@ public class viewDailyTasks extends AppCompatActivity {
 
         /* THIS IS WHERE JSON PARSING WILL BE DONE FROM the json_data String! */
 
-        JSONObject jsonObject = new JSONObject(json_data.toString());
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(json_data.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         try {
             taskList.add(new DailyTask(R.drawable.ic_not_done, jsonObject.getString("Title"),
-                    jsonObject.getString("start_time")+jsonObject.getString("end_time"));
+                    jsonObject.getString("start_time")+jsonObject.getString("end_time")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

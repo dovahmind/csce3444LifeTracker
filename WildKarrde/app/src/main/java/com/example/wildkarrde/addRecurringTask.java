@@ -76,16 +76,20 @@ public class addRecurringTask extends AppCompatActivity {
         EditText description = (EditText) findViewById(R.id.enterRecurringDescription);
         String recurringDescription = description.getText().toString();
 
+        /*
         EditText starttime = (EditText) findViewById(R.id.enterRecurringStartTime);
         String recurringStartTime = starttime.getText().toString();
 
-        System.out.println("The start time is: " + recurringStartTime + "\n");
+         */
 
+        //System.out.println("The start time is: " + recurringStartTime + "\n");
+
+        /*
         EditText endtime = (EditText) findViewById(R.id.enterRecurringEndTime);
         String recurringEndTime = endtime.getText().toString();
 
         System.out.println("The end time is: " + recurringEndTime + "\n");
-
+        */
 
         /* Gathering interval values from user input here */
         EditText monthint = (EditText) findViewById(R.id.enterRecurringMonthInt);
@@ -128,14 +132,22 @@ public class addRecurringTask extends AppCompatActivity {
 
 
         /* If there is no start time, then just 00:00:00 for the start time */
+        /*
         if (recurringStartTime.isEmpty()) {
             recurringStartTime = "00:00:00";
         }
+        */
+
+        String recurringStartTime = "00:00:00";
 
         /* If there is no end time, then just put 00:00:00 for the end time */
+        /*
         if (recurringEndTime.isEmpty()) {
             recurringEndTime = "00:00:00";
         }
+         */
+
+        String recurringEndTime = "00:00:00";
 
         /* If any of the intervals where not entered, then set intervals to 0 */
         if (rmonthint.isEmpty()) {
@@ -151,21 +163,6 @@ public class addRecurringTask extends AppCompatActivity {
         }
 
         //initialize event and put it in backend!!!
-        /* THIS IS A MANUALLY ENCODED JSON STRING (not enough time to do it through a standardized library)*/
-        /* (Comment this out for now, and attempt to make a json object instead, convert it to a string, and send that */
-
-        /*
-        String json_test = "{\n" +
-                "  \"type\": \"event\",\n" +
-                "  \"title\": \"" + eventName + "\",\n" +
-                "  \"date\": \"" + eventDate + "\",\n" +
-                "  \"description\": \"" + eventDescription + "\",\n" +
-                "  \"start_time\": \"" + eventStartTime + "\", \n" +
-                "  \"end_time\": \"" + eventEndTime + "\", \n" +
-                "  \"completed\": \"0\"\n" +
-                "}";
-
-         */
 
         /* Forming a JSON object for a recurring task specifically, refer to
         * add_reminder.php for names required in put
