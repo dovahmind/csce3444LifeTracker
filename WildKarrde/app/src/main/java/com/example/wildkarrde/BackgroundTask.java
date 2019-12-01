@@ -61,7 +61,6 @@ public class BackgroundTask extends AsyncTask<String, Void, String> {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
 
         return null;

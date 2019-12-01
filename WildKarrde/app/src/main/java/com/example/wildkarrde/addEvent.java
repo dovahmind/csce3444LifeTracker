@@ -261,7 +261,8 @@ public class addEvent extends AppCompatActivity {
             // Setting the cookie header
             urlConnection.setRequestProperty("Cookie", cookie_value);
 
-            /* Setting content type to json */
+            /* Setting content type to json. (commented out for now, since add_reminder.php
+            * will just get the json information from a json_data parameter)*/
             //urlConnection.setRequestProperty("Content-Type", "application/json");
 
             /* Connecting to the server */
