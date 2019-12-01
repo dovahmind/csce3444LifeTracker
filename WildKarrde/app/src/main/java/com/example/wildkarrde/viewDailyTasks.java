@@ -5,11 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -45,7 +45,7 @@ public class viewDailyTasks extends AppCompatActivity {
     private String phonedate;
 
     private RecyclerView DailyRecyclerView;
-    private RecyclerView.Adapter DailyAdapter;
+    private com.example.wildkarrde.DailyAdapter DailyAdapter;
     private RecyclerView.LayoutManager DailyLayoutManager;
 
     @Override
@@ -71,11 +71,12 @@ public class viewDailyTasks extends AppCompatActivity {
         /* THIS IS WHERE JSON PARSING WILL BE DONE FROM the json_data String! */
 
         JSONObject jsonObject = new JSONObject(json_data.toString());
-        taskList.add(new DailyTask(R.drawable.ic_not_done, "ID: "+jsonObject.getString("rid"),
-                "Type: "+jsonObject.getString("type"), "Title" +jsonObject.getString("Title"),
-                "Date: "+jsonObject.getString("Date"), "Description:"+jsonObject.getString("Description"),
-                "Start Time: "+jsonObject.getString("start_time"), "End Time: "+jsonObject.getString("end_time")));
-
+        try {
+            taskList.add(new DailyTask(R.drawable.ic_not_done, jsonObject.getString("Title"),
+                    jsonObject.getString("start_time")+jsonObject.getString("end_time"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         //here is where I would get and populate new arraylist to display.
         /*
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Take out Trash", "4:45-5:00am"));
