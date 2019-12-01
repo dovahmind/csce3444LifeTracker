@@ -66,7 +66,7 @@ public class viewDailyTasks extends AppCompatActivity {
         taskList = new ArrayList<>();
 
         /* THIS IS WHERE JSON PARSING WILL BE DONE FROM the json_data String! */
-
+        //Test Commit
         //here is where I would get and populate new arraylist to display.
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Take out Trash", "4:45-5:00am"));
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
