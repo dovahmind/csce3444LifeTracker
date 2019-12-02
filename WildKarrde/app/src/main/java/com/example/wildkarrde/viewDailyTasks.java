@@ -146,7 +146,7 @@ public class viewDailyTasks extends AppCompatActivity {
 
             @Override
             public void onCompleteClick(int position) {
-
+                updateCheckBoxStatus(position);
             }
         });
 
