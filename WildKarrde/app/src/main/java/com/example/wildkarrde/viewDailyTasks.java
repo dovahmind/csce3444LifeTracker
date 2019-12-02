@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -78,17 +79,34 @@ public class viewDailyTasks extends AppCompatActivity {
 
         /* THIS IS WHERE JSON PARSING WILL BE DONE FROM the json_data String! */
 
-        JSONObject jsonObject = null;
+        /* CHANGE BY JACOB ROQUEMORE HERE: USING JSONArray to parse each returned json object, and not
+        just one json object
+         */
+        JSONArray jsonarray = null;
         try {
-            jsonObject = new JSONObject(json_data.toString());
+            jsonarray = new JSONArray(json_data);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        try {
-            taskList.add(new DailyTask(R.drawable.ic_not_done, jsonObject.getString("Title"),
-                    jsonObject.getString("start_time")+jsonObject.getString("end_time")));
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+        JSONObject jsonObject = null;
+        for (int i = 0; i < jsonarray.length(); i++) {
+            try {
+                jsonObject = jsonarray.getJSONObject(i);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                taskList.add(new DailyTask(jsonObject.getInt("rid"),
+                        jsonObject.getString("type"), jsonObject.getString("Title"),
+                        jsonObject.getString("Date"), jsonObject.getString("Description"),
+                        jsonObject.getString("start_time"), jsonObject.getString("end_time"),
+                        jsonObject.getInt("checkboxResource")
+                        ));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         //here is where I would get and populate new arraylist to display.
         /*
@@ -96,7 +114,9 @@ public class viewDailyTasks extends AppCompatActivity {
         taskList.add(new DailyTask(R.drawable.ic_not_done, "Do HW", "5:00am-9:00pm"));
     */
         //sorting the taskList to be from earliest task to latest
-        Collections.sort(taskList, new sortByTime());
+
+        /* COMMENTING OUT SORTING FOR NOW */
+        //Collections.sort(taskList, new sortByTime());
 
     }
 

@@ -17,12 +17,19 @@ public class DailyTask {
     private int checkboxResource;
 
 
-    public DailyTask(int checkbox, String text1, String text2){
+    public DailyTask(int rid, String type, String title, String inpDate, String description,
+                      String start_time, String end_time, int checkbox){
+        rid = rid;
+        type = type;
+        Title = title;
+        Date = Date;
+        Description = description;
+        start_time = start_time;
+        end_time = end_time;
         checkboxResource = checkbox;
-        Title = text1;
-        Date = text2;
     }
 
+    public int getrid() { return rid; }
     public int getCheckboxResource(){
         return checkboxResource;
     }
