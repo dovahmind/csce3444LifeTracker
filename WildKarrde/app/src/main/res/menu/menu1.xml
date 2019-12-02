@@ -11,9 +11,11 @@
         android:title="Add Daily Task"
         app:showAsAction="withText" />
     <item android:id="@+id/addRecurringTask"
+        android:visible="false"
         android:title="Add Recurring Task"
         app:showAsAction="withText" />
     <item android:id="@+id/addEvent"
+        android:visible="false"
         android:title="Add Event"
         app:showAsAction="withText" />
 
