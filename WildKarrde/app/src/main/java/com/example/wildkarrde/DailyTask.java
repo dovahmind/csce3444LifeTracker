@@ -38,6 +38,9 @@ public class DailyTask {
         displayTime = start_time + "-" + end_time;
     }
 
+
+        //if end up making a place to display all the info about the event
+    //public void displayAll(String Text);
     public int getrid() { return rid; }
     public int getCheckboxResource(){
         return checkboxResource;

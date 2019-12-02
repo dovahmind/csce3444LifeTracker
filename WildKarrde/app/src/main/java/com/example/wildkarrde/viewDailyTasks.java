@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Adapter;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -74,6 +75,15 @@ public class viewDailyTasks extends AppCompatActivity {
         attempter.execute(phonedate);
     }
 
+    public void updateCheckBoxStatus(int position){
+        if(taskList.get(position).getCheckboxResource() == 1)
+            taskList.get(position).setCheckboxResource(0);
+        else
+            taskList.get(position).setCheckboxResource(1);
+        DailyAdapter.notifyItemChanged(position);
+    }
+
+
     public void createTaskList(String json_data){
         taskList = new ArrayList<>();
 
@@ -127,6 +137,21 @@ public class viewDailyTasks extends AppCompatActivity {
 
         DailyRecyclerView.setLayoutManager(DailyLayoutManager);
         DailyRecyclerView.setAdapter(DailyAdapter);
+
+        DailyAdapter.setOnItemClickListener(new DailyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                taskList.get(position);
+            }
+
+            @Override
+            public void onCompleteClick(int position) {
+
+            }
+        });
+
+
+
     }
 
     private class connectionattempt extends AsyncTask<String, String, String> {

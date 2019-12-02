@@ -16,17 +16,50 @@ import java.util.ArrayList;
 public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHolder> {
 
     private ArrayList<DailyTask> DailyList;
+    private OnItemClickListener Listener;
 
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+        void onCompleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mlistener){
+        Listener = mlistener;
+    }
     public static class DailyViewHolder extends RecyclerView.ViewHolder{
         public android.widget.ImageView ImageView;
         public TextView Title;
         public TextView Time;
 
-        public DailyViewHolder(View itemView){
+        public DailyViewHolder(View itemView, OnItemClickListener listener){
             super(itemView);
             ImageView = itemView.findViewById(R.id.checkboxImage);
             Title = itemView.findViewById(R.id.dailyTitle);
             Time = itemView.findViewById(R.id.dailyTime);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
+
+            ImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onCompleteClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -38,7 +71,7 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
     @Override
     public DailyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.daily_task, parent, false);
-        DailyViewHolder dvh = new DailyViewHolder(v);
+        DailyViewHolder dvh = new DailyViewHolder(v, Listener);
         return dvh;
     }
 
