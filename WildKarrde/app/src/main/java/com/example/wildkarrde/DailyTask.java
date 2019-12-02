@@ -15,18 +15,27 @@ public class DailyTask {
     private String start_time;
     private String end_time;
     private int checkboxResource;
+    private String displayTime;
 
 
     public DailyTask(int rid, String type, String title, String inpDate, String description,
-                      String start_time, String end_time, int checkbox){
+                      String Sstart_time, String Send_time, int checkbox){
         rid = rid;
         type = type;
         Title = title;
         Date = Date;
         Description = description;
-        start_time = start_time;
-        end_time = end_time;
+        start_time = Sstart_time;
+        end_time = Send_time;
         checkboxResource = checkbox;
+
+        if(start_time.endsWith(":00"))
+            start_time = start_time.substring(0, start_time.length() - 3);
+
+        if(end_time.endsWith(":00"))
+            end_time = end_time.substring(0, end_time.length() - 3);
+
+        displayTime = start_time + "-" + end_time;
     }
 
     public int getrid() { return rid; }
@@ -40,6 +49,7 @@ public class DailyTask {
     public String getDescription(){ return Description; }
     public String getStart_time(){ return start_time; }
     public String getEnd_time(){ return end_time; }
+    public String getDisplayTime(){ return displayTime; }
 
     public void setRid(int Srid){ rid = Srid; }
     public void setType(String SType){ type = SType; }
@@ -49,4 +59,5 @@ public class DailyTask {
     public void setStart_time(String SStart_time){ start_time = SStart_time; }
     public void setEnd_time(String SEnd_time){ end_time = SEnd_time; }
     public void setCheckboxResource(int r){ checkboxResource = r; }
+    public void setDisplayTime(String SDisplay){ displayTime = SDisplay; }
 }

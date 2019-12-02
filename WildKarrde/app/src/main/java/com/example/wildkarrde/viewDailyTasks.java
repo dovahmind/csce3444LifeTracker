@@ -117,7 +117,6 @@ public class viewDailyTasks extends AppCompatActivity {
 
         /* COMMENTING OUT SORTING FOR NOW */
         //Collections.sort(taskList, new sortByTime());
-
     }
 
     public void buildDailyRecyclerView(){

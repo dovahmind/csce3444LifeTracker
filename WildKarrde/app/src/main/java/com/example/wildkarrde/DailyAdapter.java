@@ -46,9 +46,15 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
     public void onBindViewHolder(@NonNull DailyViewHolder holder, int position) {
         DailyTask tailyDask = DailyList.get(position);
 
-        holder.ImageView.setImageResource(tailyDask.getCheckboxResource());
+                //based on what the value of the image resource is, it changes the image resource displayed
+        if(tailyDask.getCheckboxResource() == 1){ //if checkboxresource is 1, it is done
+            holder.ImageView.setImageResource(R.drawable.ic_done);
+        }
+        else //else it is not done
+            holder.ImageView.setImageResource(R.drawable.ic_not_done);
+
         holder.Title.setText(tailyDask.getTitle());
-        holder.Time.setText(tailyDask.getDate());
+        holder.Time.setText(tailyDask.getDisplayTime());
     }
 
     @Override
