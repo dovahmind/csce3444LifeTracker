@@ -2,9 +2,8 @@ package com.example.wildkarrde;
 
 public class RecurringTask {
 
-    /* MODIFICATION BY JACOB. ADDED reminder id, reminder type,
-    reminder start time, and end time to more closely follow the schema
-    on the external server
+    /*
+    Need to modify this so that it contains the data that the recurringtask has instead of daily task
      */
 
     private int rid;

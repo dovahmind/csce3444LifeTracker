@@ -96,6 +96,12 @@ public class viewRecurringTasks extends AppCompatActivity {
             }
 
             try {
+                /*
+                will need to modify this jsonObject function call
+                should get each item of the recurringtask datatype instead
+
+                title, date, description, start_time, end_time, "checkboxResource", month_time_int, week_time_int, day_time_int
+                 */
                 taskList.add(new RecurringTask(jsonObject.getInt("rid"),
                         jsonObject.getString("type"), jsonObject.getString("Title"),
                         jsonObject.getString("Date"), jsonObject.getString("Description"),
