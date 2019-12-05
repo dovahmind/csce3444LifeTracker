@@ -1,5 +1,10 @@
 <?php
 
+/* IMPORTANT NOTE: THIS IS A MODIFICATION OF returnDailyReminders.php that 
+ * was written on 12-4 which simply adapts returnDailyReminders to work with
+ * the schema for the recurringtasks table, and the general logic behind recurring
+ * tasks */
+
 /* ORIGINAL SCRIPT FROM HUY LE UNDER FETCHINGALLTASKS.PHP. ONLY SOME MINOR 
  * CHANGES HAVE BEEN MADE, WHICH ARE DESCRIBED IN THE COMMENTS */
 
@@ -72,11 +77,6 @@ if($datestr == NULL)
 /* DEBUGGING! DISPLAYING WHAT WE GOT */
 //echo ('Here is the date: ' . $datestr);
 
-/* Calculating the date's weekday name, and then only including the first 
- * three characters in lowercase to match the habits schema */
-$weekday = date('l', strtotime($datestr));
-$weekday = strtolower(substr($weekday, 0, 3));
-
 
 /* DEBUGGING! DISPLAYING WHAT WE GOT */
 //echo ('Here is the weekday in short form: ' . $weekday);
@@ -87,13 +87,14 @@ $weekday = strtolower(substr($weekday, 0, 3));
  * this weekday. If today's date is greater than the lastsync date 
  * found for a habit, then reset/update the completion status for that 
  * habit to 0 */
-$gather = "SELECT reminders.rid, habits.lastsync FROM reminders INNER JOIN 
-habits ON reminders.rid = habits.rid WHERE reminders.uid = {$uidint} AND 
-habits.{$weekday} = 1;";
+$gather = "SELECT reminders.rid, recurring_tasks.month_time_int, 
+recurring_tasks.week_time_int, recurring_tasks.day_time_int, 
+recurring_tasks.upcom FROM reminders INNER JOIN 
+recurring_tasks ON reminders.rid = recurring_tasks.rid WHERE reminders.uid = {$uidint}";
 
 $updater = "UPDATE reminders SET completed = 0 WHERE rid = ?";
 
-$updateh = "UPDATE habits SET lastsync = ? WHERE rid = ?";
+$updatereocc = "UPDATE recurring_tasks SET upcom = ? WHERE rid = ?";
 
 $currdate = strtotime($datestr);
 
@@ -116,8 +117,13 @@ if($stmt1 = $conn->prepare($gather)){
 		while($row = $rows->fetch_assoc()){
 			$tmprid = $row["rid"];	
 
-			$stored_date = $row["lastsync"];
+			$objmonthint = $row["month_time_int"];
 
+			$objweekint = $row["week_time_int"];
+
+			$objdayint = $row["day_time_int"];
+
+			$stored_date = $row["upcom"];
 
 			//echo ("Stored date: " . $stored_date);
 		
@@ -145,8 +151,22 @@ if($stmt1 = $conn->prepare($gather)){
 					 */
 				}
 
-				if($stmt3 = $conn->prepare($updateh)){
-					$stmt3->bind_param('si', $datestr, $tmprid);
+				if($stmt3 = $conn->prepare($updatereocc)){
+					/* Calculating new date based on intervals here */
+
+					//Making a datetime object to perform calculations on
+					$newdate = new DateTime($stored_date);
+
+					//Forming date arithmetic string from intervals
+					$dateadder = "$objmonthint" . " months" . "$objweekint" . " weeks" . "$objdayint" . " days";
+
+					/* Adding the intervals */
+					date_add($newdate,date_interval_create_from_date_string($dateadder));
+
+					/*Converting the date to a string for mysql */
+					$newdatestr = $newdate->format('Y-m-d'); 
+
+					$stmt3->bind_param('si', $newdatestr, $tmprid);
 					$stmt3->execute();
 					$stmt3->close();
 				
@@ -185,11 +205,10 @@ if($stmt1 = $conn->prepare($gather)){
  * habits table using a left join based on conditions dependent on either the date,
  * or if a habit occurs on the same weekday as the user's date */ 
 
-$query = "SELECT reminders.rid, reminders.type, reminders.title, reminders.date,
-reminders.description, reminders.start_time, reminders.end_time,
-reminders.completed FROM reminders LEFT JOIN habits ON reminders.rid =
-habits.rid WHERE reminders.uid = {$uidint} AND (reminders.date = ? OR
-habits.{$weekday} = 1);";
+$query = "SELECT reminders.rid, reminders.type, reminders.title, 
+recurring_tasks.upcom, reminders.description, reminders.completed   
+FROM reminders INNER JOIN recurring_tasks 
+ON reminders.rid = recurring_tasks.rid WHERE reminders.uid = {$uidint};";
 
 
 $result = array();
@@ -202,7 +221,6 @@ $tasksArray = array();
 if($stmt = $conn->prepare($query)){
 	/* CHANGE BY JACOB: Binding the date parameter to the query to prevent any potential 
 	 * sql injection from the date POST parameter */
-	$stmt->bind_param('s', $datestr);
 	$stmt->execute();
 	//Bind the fetched data to $movieId and $movieName
 	/* CHANGE BY JACOB ROQUEMORE HERE. REMOVED THE RETURN OF LOCATION AND EUID,
@@ -210,7 +228,7 @@ if($stmt = $conn->prepare($query)){
 	 * and end_time and changed complete to checkboxResource. All of these changes
 	 * where made to more closely match the object design in DailyTask.java in
 	 * our Android code */
-	$stmt->bind_result($rid, $type, $Title, $Date, $Description, $start_time, $end_time, 	     $checkboxResource);
+	$stmt->bind_result($rid, $type, $Title, $upcom, $Description, $checkboxResource);
 
 	/* CHANGE BY JACOB HERE. CHANGED movieArray to tasksArray, and changed the 
 	 * keys of the array in quotations ("") to match the binded variables above */
@@ -220,10 +238,8 @@ if($stmt = $conn->prepare($query)){
 		$tasksArray["rid"] = $rid;
 		$tasksArray["type"] = $type;
     		$tasksArray["Title"] = $Title;
-  		$tasksArray["Date"] = $Date;
+  		$tasksArray["upcom"] = $upcom;
     		$tasksArray["Description"] = $Description;
-    		$tasksArray["start_time"] = $start_time;
-		$tasksArray["end_time"] = $end_time;
     		$tasksArray["checkboxResource"] = $checkboxResource;
     		$result[]=$tasksArray;
 	}
