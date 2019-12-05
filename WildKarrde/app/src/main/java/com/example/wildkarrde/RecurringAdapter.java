@@ -34,8 +34,8 @@ public class RecurringAdapter extends RecyclerView.Adapter<RecurringAdapter.Recu
         public RecurringViewHolder(View itemView, OnItemClickListener listener){
             super(itemView);
             ImageView = itemView.findViewById(R.id.checkboxImage);
-            Title = itemView.findViewById(R.id.dailyTitle);
-            Time = itemView.findViewById(R.id.dailyTime);
+            Title = itemView.findViewById(R.id.recurringTitle);
+            Time = itemView.findViewById(R.id.recurringTime);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -86,8 +86,12 @@ public class RecurringAdapter extends RecyclerView.Adapter<RecurringAdapter.Recu
         else //else it is not done
             holder.ImageView.setImageResource(R.drawable.ic_not_done);
 
-        holder.Title.setText(tecurringDask.getTitle());
-        holder.Time.setText(tecurringDask.getDisplayTime());
+        if(tecurringDask.getTitle() != null)
+        {
+            System.out.println("We are in recurring adapter. Here is the title we have: " + tecurringDask.getTitle() + "\n");
+            holder.Title.setText(tecurringDask.getTitle());
+        }
+        holder.Time.setText(tecurringDask.getDisplayDate());
     }
 
     @Override

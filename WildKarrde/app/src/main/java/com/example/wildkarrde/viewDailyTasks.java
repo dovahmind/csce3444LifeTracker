@@ -80,16 +80,7 @@ public class viewDailyTasks extends AppCompatActivity {
     }
 
     public void updateCheckBoxStatus(int position){
-        System.out.println("Debugging. Iterating over every item in the tasklist currently to see what is going wrong.\n");
-
-        for (int i = 0; i < taskList.size(); i++)
-        {
-            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
-            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
-        }
-
         if(taskList.get(position).getCheckboxResource() == 1) {
-            System.out.println("Unchecking. The rid is: " + taskList.get(position).getrid() + " at position " + position);
             indrid = Integer.toString(taskList.get(position).getrid());
             indstatus = Integer.toString(0);
 
@@ -99,7 +90,6 @@ public class viewDailyTasks extends AppCompatActivity {
             taskList.get(position).setCheckboxResource(0);
         }
         else {
-            System.out.println("Checking. The rid is: " + taskList.get(position).getrid() + " at position " + position);
             indrid = Integer.toString(taskList.get(position).getrid());
             indstatus = Integer.toString(1);
 
@@ -175,14 +165,6 @@ public class viewDailyTasks extends AppCompatActivity {
 
         /* COMMENTING OUT SORTING FOR NOW */
         //Collections.sort(taskList, new sortByTime());
-
-        System.out.println("Debugging. Iterating over every item in the tasklist in createTasklist currently to see what is going wrong.\n");
-
-        for (int i = 0; i < taskList.size(); i++)
-        {
-            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
-            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
-        }
     }
 
     public void buildDailyRecyclerView(){
@@ -205,16 +187,6 @@ public class viewDailyTasks extends AppCompatActivity {
                 updateCheckBoxStatus(position);
             }
         });
-
-        System.out.println("Debugging. Iterating over every item in the tasklist in buildDailyRecyclerView currently to see what is going wrong.\n");
-
-        for (int i = 0; i < taskList.size(); i++)
-        {
-            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
-            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
-        }
-
-
     }
 
     private class connectionattempt extends AsyncTask<String, String, String> {
@@ -442,14 +414,6 @@ public class viewDailyTasks extends AppCompatActivity {
             else {
                 //create taskList and populate the arraylist of DailyTask objects
                 createTaskList(serv_response);
-
-                System.out.println("Debugging. Iterating over every item in the tasklist in connectionattempt currently to see what is going wrong.\n");
-
-                for (int i = 0; i < taskList.size(); i++)
-                {
-                    System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
-                    System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
-                }
 
                 //build the recyclerview so we have one!
                 buildDailyRecyclerView();

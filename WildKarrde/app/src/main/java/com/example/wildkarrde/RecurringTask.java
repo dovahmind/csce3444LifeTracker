@@ -9,32 +9,22 @@ public class RecurringTask {
     private int rid;
     private String type;
     private String Title;
-    private String Date;
+    private String upcomDate;
     private String Description;
-    private String start_time;
-    private String end_time;
     private int checkboxResource;
-    private String displayTime;
+    private String displayDate;
 
 
-    public RecurringTask(int rid, String type, String title, String inpDate, String description,
-                         String Sstart_time, String Send_time, int checkbox){
-        rid = rid;
-        type = type;
-        Title = title;
-        Date = inpDate;
-        Description = description;
-        start_time = Sstart_time;
-        end_time = Send_time;
+    public RecurringTask(int inprid, String inptype, String inptitle, String inpDate,
+                         String inpdescription, int checkbox){
+        rid = inprid;
+        type = inptype;
+        Title = inptitle;
+        upcomDate = inpDate;
+        Description = inpdescription;
         checkboxResource = checkbox;
 
-        if(start_time.endsWith(":00"))
-            start_time = start_time.substring(0, start_time.length() - 3);
-
-        if(end_time.endsWith(":00"))
-            end_time = end_time.substring(0, end_time.length() - 3);
-
-        displayTime = start_time + "-" + end_time;
+        displayDate = "Deadline: "  + upcomDate;
     }
 
 
@@ -47,20 +37,16 @@ public class RecurringTask {
     public String getTitle(){
         return Title;
     }
-    public String getDate(){ return Date; }
+    public String getDate(){ return upcomDate; }
     public String getDescription(){ return Description; }
-    public String getStart_time(){ return start_time; }
-    public String getEnd_time(){ return end_time; }
-    public String getDisplayTime(){ return displayTime; }
+    public String getDisplayDate(){ return displayDate; }
 
     public void setRid(int Srid){ rid = Srid; }
     public void setType(String SType){ type = SType; }
     public void setTitle(String STitle){ Title = STitle; }
-    public void setDate(String SDate){ Date = SDate; }
+    public void setDate(String SDate){ upcomDate = SDate; }
     public void setDescription(String SDescription){ Description = SDescription; }
-    public void setStart_time(String SStart_time){ start_time = SStart_time; }
-    public void setEnd_time(String SEnd_time){ end_time = SEnd_time; }
     public void setCheckboxResource(int r){ checkboxResource = r; }
-    public void setDisplayTime(String SDisplay){ displayTime = SDisplay; }
+    public void setDisplayDate(String SDisplay){ displayDate = SDisplay; }
 }
 
