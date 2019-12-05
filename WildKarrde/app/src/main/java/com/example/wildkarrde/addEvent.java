@@ -76,12 +76,12 @@ public class addEvent extends AppCompatActivity {
         EditText starttime = (EditText) findViewById(R.id.enterStartTime);
         String eventStartTime = starttime.getText().toString();
 
-        System.out.println("The start time is: " + eventStartTime + "\n");
+        //System.out.println("The start time is: " + eventStartTime + "\n");
 
         EditText endtime = (EditText) findViewById(R.id.enterEndTime);
         String eventEndTime = endtime.getText().toString();
 
-        System.out.println("The end time is: " + eventEndTime + "\n");
+        //System.out.println("The end time is: " + eventEndTime + "\n");
 
         /* Checking for null values */
 
@@ -103,7 +103,7 @@ public class addEvent extends AppCompatActivity {
             eventDate = dateFormat.format(currentTime);
 
             /* FOR TESTING ! */
-            System.out.println(eventDate);
+            //System.out.println(eventDate);
         }
 
         /* We are not working with the location for now */
@@ -142,7 +142,7 @@ public class addEvent extends AppCompatActivity {
 
         /* Call the EventConnector AsyncTask here so long as we can make a connection attempt to the server */
         if(makeattempt){
-            System.out.println("Making connection attempt.\n");
+            //System.out.println("Making connection attempt.\n");
             connectionattempt attempter = new connectionattempt();
             attempter.execute(json_test);
         }

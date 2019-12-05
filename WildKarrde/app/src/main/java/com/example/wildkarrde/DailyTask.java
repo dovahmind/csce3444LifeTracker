@@ -18,12 +18,12 @@ public class DailyTask {
     private String displayTime;
 
 
-    public DailyTask(int rid, String type, String title, String inpDate, String description,
+    public DailyTask(int inprid, String inptype, String title, String inpDate, String description,
                       String Sstart_time, String Send_time, int checkbox){
-        rid = rid;
-        type = type;
+        rid = inprid;
+        type = inptype;
         Title = title;
-        Date = Date;
+        Date = inpDate;
         Description = description;
         start_time = Sstart_time;
         end_time = Send_time;

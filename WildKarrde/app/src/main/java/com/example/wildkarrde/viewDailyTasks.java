@@ -58,6 +58,10 @@ public class viewDailyTasks extends AppCompatActivity {
     private com.example.wildkarrde.DailyAdapter DailyAdapter;
     private RecyclerView.LayoutManager DailyLayoutManager;
 
+    /* indrid stands for individual rid, and string indstatus stands for individual status */
+    String indrid;
+    String indstatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,10 +80,34 @@ public class viewDailyTasks extends AppCompatActivity {
     }
 
     public void updateCheckBoxStatus(int position){
-        if(taskList.get(position).getCheckboxResource() == 1)
+        System.out.println("Debugging. Iterating over every item in the tasklist currently to see what is going wrong.\n");
+
+        for (int i = 0; i < taskList.size(); i++)
+        {
+            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
+            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
+        }
+
+        if(taskList.get(position).getCheckboxResource() == 1) {
+            System.out.println("Unchecking. The rid is: " + taskList.get(position).getrid() + " at position " + position);
+            indrid = Integer.toString(taskList.get(position).getrid());
+            indstatus = Integer.toString(0);
+
+            updatestatus changestatus = new updatestatus();
+            changestatus.execute(indrid, indstatus);
+
             taskList.get(position).setCheckboxResource(0);
-        else
+        }
+        else {
+            System.out.println("Checking. The rid is: " + taskList.get(position).getrid() + " at position " + position);
+            indrid = Integer.toString(taskList.get(position).getrid());
+            indstatus = Integer.toString(1);
+
+            updatestatus changestatus = new updatestatus();
+            changestatus.execute(indrid, indstatus);
+
             taskList.get(position).setCheckboxResource(1);
+        }
         DailyAdapter.notifyItemChanged(position);
     }
 
@@ -108,12 +136,32 @@ public class viewDailyTasks extends AppCompatActivity {
             }
 
             try {
+                //int rid = jsonObject.getInt("rid");
+                //System.out.println("In createTaskList. The current rid found is: " + rid);
+                //System.out.println("Debugging: rid found is: " + jsonObject.getInt("rid") + "\n");
+
+                /*
+                DailyTask obj = new DailyTask(rid, jsonObject.getString("type"), jsonObject.getString("Title"),
+                        jsonObject.getString("Date"), jsonObject.getString("Description"),
+                        jsonObject.getString("start_time"), jsonObject.getString("end_time"),
+                        jsonObject.getInt("checkboxResource"));
+                 */
+
+
+                //System.out.println("Made a new dailytask object. It's rid is: " + obj.getrid());
+                //System.out.println("Made a new dailytask object. It's title is: " + obj.getTitle());
+
+                //taskList.add(obj);
+
+                /* ORIGINAL WAY TO ADD NEW DAILYTASK OBJECT */
+
                 taskList.add(new DailyTask(jsonObject.getInt("rid"),
                         jsonObject.getString("type"), jsonObject.getString("Title"),
                         jsonObject.getString("Date"), jsonObject.getString("Description"),
                         jsonObject.getString("start_time"), jsonObject.getString("end_time"),
                         jsonObject.getInt("checkboxResource")
                         ));
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -127,6 +175,14 @@ public class viewDailyTasks extends AppCompatActivity {
 
         /* COMMENTING OUT SORTING FOR NOW */
         //Collections.sort(taskList, new sortByTime());
+
+        System.out.println("Debugging. Iterating over every item in the tasklist in createTasklist currently to see what is going wrong.\n");
+
+        for (int i = 0; i < taskList.size(); i++)
+        {
+            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
+            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
+        }
     }
 
     public void buildDailyRecyclerView(){
@@ -150,6 +206,13 @@ public class viewDailyTasks extends AppCompatActivity {
             }
         });
 
+        System.out.println("Debugging. Iterating over every item in the tasklist in buildDailyRecyclerView currently to see what is going wrong.\n");
+
+        for (int i = 0; i < taskList.size(); i++)
+        {
+            System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
+            System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
+        }
 
 
     }
@@ -379,8 +442,249 @@ public class viewDailyTasks extends AppCompatActivity {
             else {
                 //create taskList and populate the arraylist of DailyTask objects
                 createTaskList(serv_response);
+
+                System.out.println("Debugging. Iterating over every item in the tasklist in connectionattempt currently to see what is going wrong.\n");
+
+                for (int i = 0; i < taskList.size(); i++)
+                {
+                    System.out.println("Rid at " + i + " position is: " + taskList.get(i).getrid());
+                    System.out.println("Date at " + i + " position is: " + taskList.get(i).getDate());
+                }
+
                 //build the recyclerview so we have one!
                 buildDailyRecyclerView();
+            }
+        }
+    }
+
+    private class updatestatus extends AsyncTask<String, String, String> {
+        private String serv_response = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            p = new ProgressDialog(viewDailyTasks.this);
+            p.setMessage("Contacting server...");
+            p.setIndeterminate(false);
+            p.setCancelable(false);
+            p.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String rid = strings[0];
+            String compstatus = strings[1];
+
+            System.out.println("The inputted data: " + rid + "\n");
+
+            System.out.println("At beginning of connection attempt\n");
+
+            /* Creating a custom ssl contextobject by making an
+            allowSelfSignedCerts object to call an getsslcontext
+            function whick will retrieve a custom SSLContext object
+            based on a self-signed certificate
+             */
+            allowSelfSignedCerts retrieve = new allowSelfSignedCerts();
+            SSLContext customssl = null;
+            try {
+                customssl = retrieve.getsslcontext(getApplicationContext());
+            } catch (CertificateException e) {
+                e.printStackTrace();
+            } catch (KeyStoreException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidAlgorithmParameterException e) {
+                e.printStackTrace();
+            }
+
+            if (customssl == null) {
+                System.out.println("making a custom ssl context didn't work!");
+                return ("ssl error!");
+            }
+
+            String result;
+            /* Forming the url to the registration php script */
+            URL url = null;
+            try {
+                url = new URL("https://138.68.23.145/updateReminderStatus.php");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            /* FOR DEVELOPMENT PURPOSES ONLY!
+            THIS ALLOWS ANY HOST NAME (ip hostname is being denied by javax.ssl and general
+            ssl guideline) TO PASS THROUGH.
+             */
+            /*Null Host Name verifier code is from Noam's answer at:
+            https://stackoverflow.com/questions/14619781/java-io-ioexception-hostname-was-not-verified
+             */
+            HttpsURLConnection.setDefaultHostnameVerifier(new NullHostNameVerifier());
+            HttpsURLConnection urlConnection;
+
+            try {
+                urlConnection = (HttpsURLConnection) url.openConnection();
+            } catch (IOException ex) {
+                return null;
+            }
+
+            System.out.println("Opened connection ok\n");
+
+            /* Gathering the SSLContext object information from the passed parameter and
+            setting the SSLSocketFactory for the urlConnection */
+            SSLSocketFactory sf = customssl.getSocketFactory();
+            urlConnection.setSSLSocketFactory(sf);
+
+            System.out.println("Set socket factory ok\n");
+
+            /* The following code below is based on answers from both Ricardo, as well as NateS's reply
+            from the following link:
+            https://stackoverflow.com/questions/44305351/send-data-in-request-body-using-httpurlconnection?rq=1
+             */
+
+            /* Setting the urlConnection's output option to true */
+            urlConnection.setDoOutput(true);
+
+            /* Setting the HTTP method to POST */
+            try {
+                urlConnection.setRequestMethod("POST");
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            }
+
+
+            /* Retrieving the cookie from the shared preferences */
+            cookie_storage cookie_retriever = new cookie_storage();
+            String raw_cookie = cookie_retriever.get_cookie(getApplicationContext());
+
+            /* Parsing the raw_cookie string to only get the PHPSESSID information before the ;*/
+            String[] cookielist = raw_cookie.split(";");
+            String cookie_value = cookielist[0];
+
+            //System.out.println("Cookie value is: " + cookie_value + "\n");
+
+            // Setting the cookie header
+            urlConnection.setRequestProperty("Cookie", cookie_value);
+
+            /* Setting content type to json (commented out for now, since add_reminder.php
+             * will just get the json information from a json_data parameter) */
+            //urlConnection.setRequestProperty("Content-Type", "application/json");
+
+            /* Connecting to the server */
+            try {
+                urlConnection.connect();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            System.out.println("Connection was made\n");
+
+            /* Prepping the output stream */
+            OutputStream sender = null;
+            try {
+                sender = urlConnection.getOutputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            /* An output streamwriter to write data into the Output Stream */
+            OutputStreamWriter bodyformer = null;
+            try {
+                bodyformer = new OutputStreamWriter(sender, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            /* Writing the POST Request body */
+            String bodyparam = "rid=" + rid + "&compstatus=" + compstatus;
+
+            /* Writing using output stream writer */
+            try {
+                bodyformer.write(bodyparam);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            /* Flushing the output stream writer */
+            try {
+                bodyformer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            /* Closing the output stream itself */
+            try {
+                sender.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Sent data\n");
+
+
+            /*Gathering response from POST request */
+            InputStream response = null;
+
+            try {
+                response = urlConnection.getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        /* The following InputStream to string conversion trick is from Pavel Repin's
+        answer at the following link:
+        https://stackoverflow.com/questions/309424/how-do-i-read-convert-an-inputstream-into-a-string-in-java
+         */
+            java.util.Scanner s = new java.util.Scanner(response).useDelimiter("\\A");
+            result = s.hasNext() ? s.next() : "";
+
+            /* Closing the input stream */
+            try {
+                response.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Here is the response: " + result + "\n");
+
+            return result;
+        }
+
+        /* For post execute here, just return the resulting string */
+        @Override
+        protected void onPostExecute(String result) {
+            String serv_response;
+            System.out.println("We are in postexecute\n");
+            System.out.println("Here is the response: " + result + "\n");
+            super.onPostExecute(result);
+            serv_response = result;
+            System.out.println("Here is the responseresult string: " + serv_response + "\n");
+            p.dismiss();
+
+            /* Checking to see if it was a success */
+            String successstr = "success";
+            boolean successresult = false;
+            if (!serv_response.isEmpty()) {
+                successresult = serv_response.toLowerCase().contains(successstr.toLowerCase());
+            }
+
+            if(successresult)
+            {
+                //String shownmsg = "Successfully updated status on server!";
+                Toast succmsg = Toast.makeText(getApplicationContext(), serv_response, Toast.LENGTH_SHORT);
+                succmsg.show();
+            }
+
+            else
+            {
+                String shownmsg = "Could not update status on server!";
+                Toast succmsg = Toast.makeText(getApplicationContext(), shownmsg, Toast.LENGTH_SHORT);
+                succmsg.show();
             }
         }
     }

@@ -22,7 +22,7 @@ public class RecurringTask {
         rid = rid;
         type = type;
         Title = title;
-        Date = Date;
+        Date = inpDate;
         Description = description;
         start_time = Sstart_time;
         end_time = Send_time;
