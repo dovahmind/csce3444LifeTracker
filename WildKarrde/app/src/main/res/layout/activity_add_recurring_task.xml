@@ -23,7 +23,7 @@
         android:layout_below="@+id/enterRecurringName"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Starting Date"
+        android:hint="Starting Date (YYYY/MM/DD)"
         android:inputType="date" />
 
     <EditText

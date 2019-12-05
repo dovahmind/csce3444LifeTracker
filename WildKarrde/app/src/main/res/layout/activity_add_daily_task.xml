@@ -21,15 +21,16 @@
     for now just a string.-->
 
     //this needs to be a checkbox thing where you select the days of the week instead
+
     <EditText
         android:id="@+id/enterDailyDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterDailyName"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:hint="Task Date"
-        android:inputType="date"
-        android:layout_below="@+id/enterDailyName"/>
+        android:hint="Starting Date (YYYY/MM/DD) (optional)"
+        android:inputType="date" />
 
     <EditText
         android:id="@+id/enterStringDailyLocation"

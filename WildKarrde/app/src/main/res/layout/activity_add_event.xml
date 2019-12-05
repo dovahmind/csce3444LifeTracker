@@ -20,11 +20,11 @@
         android:id="@+id/enterStringEventDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/enterEventName"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="date"
-        android:hint="Date"
-        android:layout_below="@+id/enterEventName"/>
+        android:hint="Date (YYYY/MM/DD)"
+        android:inputType="date" />
 
     <EditText
         android:id="@+id/enterStringEventLocation"
